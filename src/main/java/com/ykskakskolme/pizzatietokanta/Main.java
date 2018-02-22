@@ -14,12 +14,14 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+        Database database = new Database("jdbc:sqlite:pizzat.db");
+        PizzaDao pizzaDao = new PizzaDao(database);
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
 
         System.out.println("Hello world!");
-
+        
         Spark.get("/", (req, res) -> {
 
             List<String> pizzat = new ArrayList<>();

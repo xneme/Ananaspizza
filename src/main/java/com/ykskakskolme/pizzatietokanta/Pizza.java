@@ -5,10 +5,14 @@
  */
 package com.ykskakskolme.pizzatietokanta;
 
-/**
- *
- * @author ajhaarni
- */
+
 public class Pizza {
+    //TODO lisää sisältöä pizzaan
+    String nimi;
+
+    public Pizza(String nimi) {
+        this.nimi = nimi;
+    }
+    
     
 }
