@@ -8,10 +8,16 @@ package com.ykskakskolme.pizzatietokanta;
 
 public class Pizza {
     //TODO lisää sisältöä pizzaan
-    String nimi;
+    private String nimi;
 
     public Pizza(String nimi) {
         this.nimi = nimi;
     }
+
+    public String getNimi() {
+        return nimi;
+    }
+    
+    
     
 }

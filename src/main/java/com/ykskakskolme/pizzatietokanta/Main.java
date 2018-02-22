@@ -21,7 +21,7 @@ public class Main {
         }
 
         System.out.println("Hello world!");
-        
+
         Spark.get("/", (req, res) -> {
 
             List<String> pizzat = new ArrayList<>();
@@ -47,6 +47,14 @@ public class Main {
             map.put("lista", pizzat);
 
             return new ModelAndView(map, "index");
+        }, new ThymeleafTemplateEngine());
+
+        Spark.get("/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            Integer pizzaId = Integer.parseInt(req.params(":id"));
+            Pizza p = pizzaDao.findOne(pizzaId);
+            map.put("pizza", p);
+            return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/", (req, res) -> {
@@ -102,4 +110,3 @@ public class Main {
         return DriverManager.getConnection("jdbc:sqlite:pizzat.db");
     }
 }
-
