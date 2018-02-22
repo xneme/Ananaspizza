@@ -17,9 +17,9 @@
         </p>
         
         <ul>
-            <li th:each="arvo : ${lista}">
-                <span th:text="${arvo}">:DD</span>
-                <form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo})}"><input type="submit" value="Poista"/></form>
+            <li th:each="arvo : ${pizzat}">
+                <span th:text="${arvo.nimi}">:DD</span>
+                <form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>
             </li>
         </ul>
         

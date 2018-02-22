@@ -32,6 +32,7 @@ public class Main {
             HashMap map = new HashMap<>();
 
             map.put("lista", nimet);
+            map.put("pizzat", pizzat);
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
@@ -72,9 +73,11 @@ public class Main {
         Spark.post("/delete/:id", (req, res) -> {
             System.out.println("Poistetaan: "
                     + req.params(":id"));
+            
+            pizzaDao.delete(Integer.parseInt(req.params(":id")));
 
             // avaa yhteys tietokantaan
-            Connection conn = getConnection();
+           /* Connection conn = getConnection();
 
             // tee kysely
             PreparedStatement stmt
@@ -84,7 +87,7 @@ public class Main {
             stmt.executeUpdate();
 
             // sulje yhteys tietokantaan
-            conn.close();
+            conn.close(); */
 
             res.redirect("/");
             return "";
