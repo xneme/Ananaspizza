@@ -18,7 +18,9 @@
         
         <ul>
             <li th:each="arvo : ${pizzat}">
-                <span th:text="${arvo.nimi}">:DD</span>
+                <a th:href="@{~/{id}(id=${arvo.id})}">
+                    <span th:text="${arvo.nimi}">Nimi</span>
+                </a>
                 <form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>
             </li>
         </ul>

@@ -55,8 +55,18 @@ public class PizzaDao implements Dao<Pizza, Integer> {
 
     @Override
     public Pizza saveOrUpdate(Pizza object) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaAnnos (nimi) VALUES (?)");
+        stmt.setString(1, object.getNimi());
+        stmt.executeUpdate();
+        stmt.close();
+        conn.close();
+        return object;
     }
+    
+ 
+    
 
     @Override
     public void delete(Integer key) throws SQLException {

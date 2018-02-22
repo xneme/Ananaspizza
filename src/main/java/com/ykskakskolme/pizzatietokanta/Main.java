@@ -22,13 +22,13 @@ public class Main {
         }
 
         System.out.println("Hello world!");
-        
+
         Spark.get("/", (req, res) -> {
 
             List<Pizza> pizzat = pizzaDao.findAll();
-            // Tässä on pieni hack, pitää varmaan tulevaisuudessa käsitellä nimet vasta index.html:ssä
+            // Tässä on pieni hack
             List<String> nimet = pizzat.stream().map(n -> n.getNimi()).collect(Collectors.toList());
-            
+
             HashMap map = new HashMap<>();
 
             map.put("lista", nimet);
@@ -53,18 +53,8 @@ public class Main {
             System.out.println("Saatiin: "
                     + req.queryParams("pizza"));
 
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("INSERT INTO PizzaAnnos (nimi) VALUES (?)");
-            stmt.setString(1, req.queryParams("pizza"));
-
-            stmt.executeUpdate();
-
-            // sulje yhteys tietokantaan
-            conn.close();
+            Pizza p = new Pizza(null, req.queryParams("pizza"));
+            pizzaDao.saveOrUpdate(p);
 
             res.redirect("/");
             return "";
@@ -73,33 +63,11 @@ public class Main {
         Spark.post("/delete/:id", (req, res) -> {
             System.out.println("Poistetaan: "
                     + req.params(":id"));
-            
+
             pizzaDao.delete(Integer.parseInt(req.params(":id")));
-
-            // avaa yhteys tietokantaan
-           /* Connection conn = getConnection();
-
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("DELETE FROM PizzaAnnos WHERE nimi = ?");
-            stmt.setString(1, req.params(":id"));
-
-            stmt.executeUpdate();
-
-            // sulje yhteys tietokantaan
-            conn.close(); */
 
             res.redirect("/");
             return "";
         });
-    }
-
-    public static Connection getConnection() throws Exception {
-        String dbUrl = System.getenv("JDBC_DATABASE_URL");
-        if (dbUrl != null && dbUrl.length() > 0) {
-            return DriverManager.getConnection(dbUrl);
-        }
-
-        return DriverManager.getConnection("jdbc:sqlite:pizzat.db");
     }
 }
