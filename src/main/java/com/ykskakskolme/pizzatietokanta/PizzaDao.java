@@ -36,7 +36,17 @@ public class PizzaDao implements Dao<Pizza, Integer>{
 
     @Override
     public List<Pizza> findAll() throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PizzaAnnos");
+        List<Pizza> pizzat = new ArrayList<>();
+        
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            pizzat.add(new Pizza(rs.getString("nimi")));
+        }
+        
+        return pizzat;
+        
     }
 
     @Override

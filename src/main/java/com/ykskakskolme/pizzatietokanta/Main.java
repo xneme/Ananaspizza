@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;
@@ -21,38 +22,27 @@ public class Main {
         }
 
         System.out.println("Hello world!");
-
+        
         Spark.get("/", (req, res) -> {
 
-            List<String> pizzat = new ArrayList<>();
-
-            // avaa yhteys tietokantaan
-            Connection conn = getConnection();
-
-            // tee kysely
-            PreparedStatement stmt
-                    = conn.prepareStatement("SELECT nimi FROM PizzaAnnos");
-            ResultSet tulos = stmt.executeQuery();
-
-            // käsittele kyselyn tulokset
-            while (tulos.next()) {
-                String nimi = tulos.getString("nimi");
-                pizzat.add(nimi);
-            }
-            // sulje yhteys tietokantaan
-            conn.close();
-
+            List<Pizza> pizzat = pizzaDao.findAll();
+            // Tässä on pieni hack, pitää varmaan tulevaisuudessa käsitellä nimet vasta index.html:ssä
+            List<String> nimet = pizzat.stream().map(n -> n.getNimi()).collect(Collectors.toList());
+            
             HashMap map = new HashMap<>();
 
-            map.put("lista", pizzat);
+            map.put("lista", nimet);
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
         Spark.get("/:id", (req, res) -> {
             HashMap map = new HashMap<>();
+            //Parametri osoitteesta
             Integer pizzaId = Integer.parseInt(req.params(":id"));
+            //Haetaan pizza
             Pizza p = pizzaDao.findOne(pizzaId);
+            //Näytetään pizza
             map.put("pizza", p);
             return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
