@@ -14,5 +14,4 @@ public class Pizza {
         this.nimi = nimi;
     }
     
-    
 }

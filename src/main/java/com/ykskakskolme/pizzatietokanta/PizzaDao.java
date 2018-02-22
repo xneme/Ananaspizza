@@ -48,5 +48,4 @@ public class PizzaDao implements Dao<Pizza, Integer>{
     public void delete(Integer key) throws SQLException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
 }
