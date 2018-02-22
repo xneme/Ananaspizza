@@ -37,7 +37,7 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        Spark.get("/:id", (req, res) -> {
+        Spark.get("/pizza/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             //Parametri osoitteesta
             Integer pizzaId = Integer.parseInt(req.params(":id"));
@@ -59,6 +59,11 @@ public class Main {
             res.redirect("/");
             return "";
         });
+        
+        Spark.get("/lisays", (req, res) -> {
+            HashMap map = new HashMap<>();
+            return new ModelAndView(map, "lisays");
+        }, new ThymeleafTemplateEngine());
 
         Spark.post("/delete/:id", (req, res) -> {
             System.out.println("Poistetaan: "

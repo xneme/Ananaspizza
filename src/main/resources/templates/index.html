@@ -1,35 +1,33 @@
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <title>Pizzalista</title>
     </head>
-    
+
     <body>
         <h1>Maailman parhaat ananaspizzat</h1>
-        
+
         <p>
             Jokaisessa pizzassa ananasta.
         </p>
-        
+
         <p th:text="${lista}">
             :D
         </p>
-        
+
         <ul>
             <li th:each="arvo : ${pizzat}">
-                <a th:href="@{~/{id}(id=${arvo.id})}">
+                <a th:href="@{~/pizza/{id}(id=${arvo.id})}">
                     <span th:text="${arvo.nimi}">Nimi</span>
                 </a>
                 <form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>
             </li>
         </ul>
-        
-        <form action="/" method="POST">
-            <input type="text" name="pizza"/>
-            <input type="submit"/>
-        </form>
-        
+
+        <a th:href="@{~/lisays}">
+            <h3>Lisää pizza</h3>
+        </a>
     </body>
-    
+
 </html>
