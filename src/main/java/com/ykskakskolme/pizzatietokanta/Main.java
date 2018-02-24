@@ -117,13 +117,23 @@ public class Main {
             return "";
         });
 
-        Spark.post("/delete/:id", (req, res) -> {
+        Spark.post("/poistapizza/:id", (req, res) -> {
             System.out.println("Poistetaan: "
                     + req.params(":id"));
 
             pizzaDao.delete(Integer.parseInt(req.params(":id")));
 
             res.redirect("/");
+            return "";
+        });
+        
+        Spark.post("/poistatayte/:id", (req, res) -> {
+            System.out.println("Poistetaan: "
+                    + req.params(":id"));
+
+            tayteDao.delete(Integer.parseInt(req.params(":id")));
+
+            res.redirect("/taytteet");
             return "";
         });
     }

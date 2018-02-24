@@ -83,6 +83,11 @@ public class TayteDao implements Dao<Tayte, Integer> {
         stmt.setInt(1, key);
         stmt.executeUpdate();
         
+        stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE tayte_id = ?");
+        
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
+        
         stmt.close();
         conn.close();
     }
