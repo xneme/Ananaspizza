@@ -51,6 +51,29 @@ public class Main {
             map.put("pizza", p);
             return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/pizzataytteet/:id", (req, res) -> {
+            HashMap map = new HashMap<>();
+            //Parametri osoitteesta
+            Integer pizzaId = Integer.parseInt(req.params(":id"));
+            //Haetaan pizza
+            Pizza p = pizzaDao.findOne(pizzaId);
+            List<Tayte> taytteet = tayteDao.findAll();
+            //Näytetään pizza
+            map.put("pizza", p);
+            map.put("taytteet", taytteet);
+            return new ModelAndView(map, "pizzataytteet");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.post("/pizzataytteet/:id", (req, res) -> {
+            int pizzaId = Integer.parseInt(req.params(":id"));
+            int tayteId = Integer.parseInt(req.queryParams("taytebox"));
+            
+            pizzaDao.lisaaTayte(pizzaId, tayteId);
+
+            res.redirect("/pizzataytteet/" + pizzaId);
+            return "";
+        });
 
         Spark.get("/lisays", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -99,7 +122,7 @@ public class Main {
             
             int id = pizzaDao.saveRaw(nimi, pohjaId, kastikeId, kokoId, hinta);
             
-            res.redirect("/lisaataytteet/" + id);
+            res.redirect("/pizzataytteet/" + id);
             return "";
         });
 

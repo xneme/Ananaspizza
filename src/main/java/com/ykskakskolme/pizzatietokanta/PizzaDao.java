@@ -111,6 +111,17 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         
         return id;
     }
+    
+    public void lisaaTayte(Integer pizzaId, Integer tayteId) throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaTayte (pizza_id, tayte_id) VALUES (?, ?)");
+        stmt.setInt(1, pizzaId);
+        stmt.setInt(2, tayteId);
+        stmt.executeUpdate();
+        
+        stmt.close();
+        conn.close();
+    }
 
     @Override
     public void delete(Integer key) throws SQLException {
