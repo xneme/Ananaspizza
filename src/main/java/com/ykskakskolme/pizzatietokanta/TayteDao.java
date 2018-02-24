@@ -28,6 +28,27 @@ public class TayteDao implements Dao<Tayte, Integer> {
         conn.close();
         return t;
     }
+    
+    public List<Tayte> tyhjaLista() throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Tayte WHERE name = ?");
+        stmt.setString(1, "Ananas");
+
+        List<Tayte> taytteet = new ArrayList<>();
+        
+        ResultSet rs = stmt.executeQuery();
+        if (!rs.next()) {
+            return taytteet;
+        }
+        
+        Tayte ananas = new Tayte(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
+        taytteet.add(ananas);
+        
+        rs.close();
+        stmt.close();
+        conn.close();
+        return taytteet;
+    }
 
     @Override
     public List<Tayte> findAll() throws SQLException {

@@ -9,7 +9,12 @@
     <body>
         <h1>Lisää pizza</h1>
         
-        <form action="/pizzantaytteet" method="POST">
+        <form action="/lisaapizza" method="POST">
+            Valitse koko:
+            <select name="kokobox" th:field="*{koko}">
+                <option th:each="koko : ${koot}" th:value="${koko.id}" th:text="${koko.nimi}">Koko</option>
+            </select>
+            <br />
             Valitse pohja:
             <select name="pohjabox" th:field="*{pohja}">
                 <option th:each="pohja : ${pohjat}" th:value="${pohja.id}" th:text="${pohja.nimi}">Pohja</option>

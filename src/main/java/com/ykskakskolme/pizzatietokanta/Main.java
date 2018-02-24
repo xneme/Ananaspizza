@@ -58,10 +58,12 @@ public class Main {
             List<Pohja> pohjat = pohjaDao.findAll();
             List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();
+            List<Koko> koot = kokoDao.findAll();
 
             map.put("pohjat", pohjat);
             map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
+            map.put("koot", koot);
             
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
@@ -72,7 +74,7 @@ public class Main {
             List<Pohja> pohjat = pohjaDao.findAll();
             List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();
-
+            
             map.put("pohjat", pohjat);
             map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
@@ -80,16 +82,24 @@ public class Main {
             return new ModelAndView(map, "taytteet");
         }, new ThymeleafTemplateEngine());
         
-        Spark.post("/pizzantaytteet", (req, res) -> {
+        Spark.post("/lisaapizza", (req, res) -> {
             String nimi = req.queryParams("pizza");
             
             System.out.println("Saatiin: "
-                    + req.queryParams("pizza"));
-
-            Pizza p = new Pizza(null, req.queryParams("pizza"));
-            pizzaDao.saveOrUpdate(p);
-
-            res.redirect("/");
+                    + req.queryParams("pizza") + " "
+                    + req.queryParams("kokobox") + " "
+                    + req.queryParams("pohjabox") + " "
+                    + req.queryParams("kastikebox") + " "
+                    + req.queryParams("hinta"));
+            
+            int pohjaId = Integer.parseInt(req.queryParams("pohjabox"));
+            int kastikeId = Integer.parseInt(req.queryParams("kastikebox"));
+            int kokoId = Integer.parseInt(req.queryParams("kokobox"));
+            double hinta = Double.parseDouble(req.queryParams("hinta"));
+            
+            int id = pizzaDao.saveRaw(nimi, pohjaId, kastikeId, kokoId, hinta);
+            
+            res.redirect("/lisaataytteet/" + id);
             return "";
         });
 
