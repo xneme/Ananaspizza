@@ -11,11 +11,15 @@ import java.sql.*;
 public class PizzaDao implements Dao<Pizza, Integer> {
 
     private Database database;
+    private TayteDao tayteDao;
+    private PohjaDao pohjaDao;
 
-    public PizzaDao(Database database) {
+    public PizzaDao(Database database, TayteDao tayteDao, PohjaDao pohjaDao) {
         this.database = database;
+        this.tayteDao = tayteDao;
+        this.pohjaDao = pohjaDao;
     }
-
+    
     @Override
     public Pizza findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection(); // luodaan yhteys
@@ -28,7 +32,9 @@ public class PizzaDao implements Dao<Pizza, Integer> {
             return null; // jos ei löytynyt mitään, palautetaan null
         }
         // TODO pizzalla on tällä hetkellä vain nimi
-        Pizza p = new Pizza(rs.getInt("id"), rs.getString("nimi"));
+        List<Tayte> taytteet = tayteDao.findByPizzaId(key);
+        List<Pohja> pohjat = pohjaDao.findByPizzaId(key);
+        Pizza p = new Pizza(rs.getInt("id"), rs.getString("nimi"), pohjat, taytteet, rs.getDouble("hinta"));
         rs.close();
         stmt.close();
         conn.close();

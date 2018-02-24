@@ -15,8 +15,13 @@ import spark.template.thymeleaf.ThymeleafTemplateEngine;
 public class Main {
 
     public static void main(String[] args) throws Exception {
+
         Database database = new Database("jdbc:sqlite:pizzat.db");
-        PizzaDao pizzaDao = new PizzaDao(database);
+
+        PohjaDao pohjaDao = new PohjaDao(database);
+        TayteDao tayteDao = new TayteDao(database);
+        PizzaDao pizzaDao = new PizzaDao(database, tayteDao, pohjaDao);
+
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
@@ -26,12 +31,9 @@ public class Main {
         Spark.get("/", (req, res) -> {
 
             List<Pizza> pizzat = pizzaDao.findAll();
-            // Tässä on pieni hack
-            List<String> nimet = pizzat.stream().map(n -> n.getNimi()).collect(Collectors.toList());
 
             HashMap map = new HashMap<>();
 
-            map.put("lista", nimet);
             map.put("pizzat", pizzat);
 
             return new ModelAndView(map, "index");
@@ -48,8 +50,24 @@ public class Main {
             return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
 
+        Spark.get("/lisays", (req, res) -> {
+            HashMap map = new HashMap<>();
+            return new ModelAndView(map, "lisays");
+        }, new ThymeleafTemplateEngine());
+
+        Spark.get("/taytteet", (req, res) -> {
+            HashMap map = new HashMap<>();
+
+            List<Pohja> pohjat = pohjaDao.findAll();
+            List<Tayte> taytteet = tayteDao.findAll();
+
+            map.put("pohjat", pohjat);
+            map.put("taytteet", taytteet);
+
+            return new ModelAndView(map, "taytteet");
+        }, new ThymeleafTemplateEngine());
+
         Spark.post("/", (req, res) -> {
-            System.out.println("Hei maailma!");
             System.out.println("Saatiin: "
                     + req.queryParams("pizza"));
 
@@ -59,11 +77,30 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        
-        Spark.get("/lisays", (req, res) -> {
-            HashMap map = new HashMap<>();
-            return new ModelAndView(map, "lisays");
-        }, new ThymeleafTemplateEngine());
+
+        Spark.post("/lisaatayte", (req, res) -> {
+            System.out.println("Saatiin: "
+                    + req.queryParams("tayte") + " "
+                    + req.queryParams("vegaaninen"));
+
+            Boolean vegaaninen = req.queryParamOrDefault("vegaaninen", "false").equals("true");
+            Tayte t = new Tayte(null, req.queryParams("tayte"), vegaaninen);
+            tayteDao.saveOrUpdate(t);
+
+            res.redirect("/taytteet");
+            return "";
+        });
+
+        Spark.post("/lisaapohja", (req, res) -> {
+            System.out.println("Saatiin: "
+                    + req.queryParams("pohja"));
+
+            Pohja p = new Pohja(null, req.queryParams("pohja"));
+            pohjaDao.saveOrUpdate(p);
+
+            res.redirect("/taytteet");
+            return "";
+        });
 
         Spark.post("/delete/:id", (req, res) -> {
             System.out.println("Poistetaan: "

@@ -8,5 +8,22 @@
 
     <body>
         <h1 th:text="${pizza.nimi}">Pizzan nimi</h1>
+        <h3>Pohja</h3>
+        <ul>
+            <li th:each="pohja : ${pizza.pohjat}">
+                    <span th:text="${pohja.nimi}">Nimi
+                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
+                    </span>
+            </li>
+        </ul>
+        <h3>Täytteet</h3>
+        <ul>
+            <li th:each="tayte : ${pizza.taytteet}">
+                    <span th:text="${tayte.nimi}">Nimi
+                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
+                    </span>
+            </li>
+        </ul>
+        <a th:href="@{~/}">Takaisin etusivulle</a>
     </body>
 </html>
