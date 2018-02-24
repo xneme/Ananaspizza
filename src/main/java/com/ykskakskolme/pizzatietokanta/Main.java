@@ -53,7 +53,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.get("/lisays", (req, res) -> {
+            List<Tayte> taytteet = tayteDao.findAll();
             HashMap map = new HashMap<>();
+             map.put("taytteet", taytteet);
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
 

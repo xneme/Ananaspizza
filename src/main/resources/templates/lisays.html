@@ -12,6 +12,11 @@
             <input type="text" name="pizza"/>
             <input type="submit"/>
         </form>
+        
+        <select th:field="*{tayte}">
+              <option th:each="tayte : ${taytteet}" th:value="${tayte.id}" th:text="${tayte.nimi}">Täyte</option>
+        </select>
+        
         <a th:href="@{~/}">
             Takaisin etusivulle
         </a>
