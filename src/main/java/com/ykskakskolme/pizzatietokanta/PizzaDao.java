@@ -33,6 +33,10 @@ public class PizzaDao implements Dao<Pizza, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
+
             return null; // jos ei löytynyt mitään, palautetaan null
         }
 
@@ -42,9 +46,11 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         Koko koko = kokoDao.findByPizzaId(key);
 
         Pizza p = new Pizza(rs.getInt("id"), rs.getString("nimi"), pohja, kastike, taytteet, koko, rs.getDouble("hinta"));
+
         rs.close();
         stmt.close();
         conn.close();
+
         return p;
 
     }
@@ -62,9 +68,12 @@ public class PizzaDao implements Dao<Pizza, Integer> {
             Pohja pohja = pohjaDao.findByPizzaId(id);
             Kastike kastike = kastikeDao.findByPizzaId(id);
             Koko koko = kokoDao.findByPizzaId(id);
-            
+
             pizzat.add(new Pizza(id, rs.getString("nimi"), pohja, kastike, taytteet, koko, rs.getDouble("hinta")));
         }
+        rs.close();
+        stmt.close();
+        conn.close();
 
         return pizzat;
 
@@ -77,12 +86,12 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pizza (nimi) VALUES (?)");
         stmt.setString(1, object.getNimi());
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
         return object;
     }
-    
+
     public int saveRaw(String nimi, int pohjaId, int kastikeId, int kokoId, double hinta) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pizza (nimi, pohja_id, kastike_id, koko_id, hinta) VALUES (?, ?, ?, ?, ?)");
@@ -92,14 +101,14 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         stmt.setInt(4, kokoId);
         stmt.setDouble(5, hinta);
         stmt.executeUpdate();
-        
+
         stmt = conn.prepareStatement("SELECT * FROM Pizza WHERE nimi = ? AND pohja_id = ? AND kastike_id = ? AND koko_id = ? AND hinta = ?");
         stmt.setString(1, nimi);
         stmt.setInt(2, pohjaId);
         stmt.setInt(3, kastikeId);
         stmt.setInt(4, kokoId);
         stmt.setDouble(5, hinta);
-        
+
         ResultSet rs = stmt.executeQuery();
         int id = 0;
         if (rs.next()) {
@@ -108,17 +117,17 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         rs.close();
         stmt.close();
         conn.close();
-        
+
         return id;
     }
-    
+
     public void lisaaTayte(Integer pizzaId, Integer tayteId) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaTayte (pizza_id, tayte_id) VALUES (?, ?)");
         stmt.setInt(1, pizzaId);
         stmt.setInt(2, tayteId);
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }

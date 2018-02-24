@@ -1,35 +1,35 @@
 BEGIN TRANSACTION;
 
 CREATE TABLE Pizza (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi TEXT,
     pohja_id INTEGER,
     kastike_id INTEGER,
     koko_id INTEGER,
-    hinta DOUBLE,
+    hinta NUMERIC,
     FOREIGN KEY (pohja_id) REFERENCES Pohja(id),
     FOREIGN KEY (kastike_id) REFERENCES Kastike(id),
     FOREIGN KEY (koko_id) REFERENCES Koko(id)
 );
 
 CREATE TABLE Tayte (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi TEXT,
     vegaaninen  BOOLEAN
 );
 
 CREATE TABLE Pohja (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi TEXT
 );
 
 CREATE TABLE Kastike (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi TEXT
 );
 
 CREATE TABLE Koko (
-    id INTEGER PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     nimi TEXT
 );
 

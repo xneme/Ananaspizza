@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class PohjaDao implements Dao<Pohja, Integer> {
-    
+
     private Database database;
 
     public PohjaDao(Database database) {
@@ -19,13 +19,19 @@ public class PohjaDao implements Dao<Pohja, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
+
             return null;
         }
-        
+
         Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+
         rs.close();
         stmt.close();
         conn.close();
+
         return p;
     }
 
@@ -40,24 +46,34 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             pohjat.add(new Pohja(rs.getInt("id"), rs.getString("nimi")));
         }
 
+        rs.close();
+        stmt.close();
+        conn.close();
+
         return pohjat;
     }
-    
+
     public Pohja findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja, Pizza WHERE Pohja.id = Pizza.pohja_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
+            
             return null;
         }
-        
+
         Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+        
         rs.close();
         stmt.close();
         conn.close();
+        
         return p;
     }
 
@@ -68,8 +84,10 @@ public class PohjaDao implements Dao<Pohja, Integer> {
         PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pohja (nimi) VALUES (?)");
         stmt.setString(1, object.getNimi());
         stmt.executeUpdate();
+        
         stmt.close();
         conn.close();
+        
         return object;
     }
 
@@ -77,10 +95,10 @@ public class PohjaDao implements Dao<Pohja, Integer> {
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pohja WHERE id = ?");
-        
+
         stmt.setInt(1, key);
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }

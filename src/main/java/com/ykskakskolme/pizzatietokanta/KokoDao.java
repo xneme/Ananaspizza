@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class KokoDao implements Dao<Koko, Integer> {
-    
+
     private Database database;
 
     public KokoDao(Database database) {
@@ -19,13 +19,18 @@ public class KokoDao implements Dao<Koko, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         }
-        
+
         Koko k = new Koko(rs.getInt("id"), rs.getString("nimi"));
+
         rs.close();
         stmt.close();
         conn.close();
+
         return k;
     }
 
@@ -39,25 +44,34 @@ public class KokoDao implements Dao<Koko, Integer> {
         while (rs.next()) {
             koot.add(new Koko(rs.getInt("id"), rs.getString("nimi")));
         }
+        rs.close();
+        stmt.close();
+        conn.close();
 
         return koot;
     }
-    
+
     public Koko findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko, Pizza WHERE Koko.id = Pizza.pohja_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
+
             return null;
         }
-        
+
         Koko k = new Koko(rs.getInt("id"), rs.getString("nimi"));
+
         rs.close();
         stmt.close();
         conn.close();
+
         return k;
     }
 
@@ -70,6 +84,7 @@ public class KokoDao implements Dao<Koko, Integer> {
         stmt.executeUpdate();
         stmt.close();
         conn.close();
+
         return object;
     }
 
@@ -77,10 +92,10 @@ public class KokoDao implements Dao<Koko, Integer> {
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM Koko WHERE id = ?");
-        
+
         stmt.setInt(1, key);
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }

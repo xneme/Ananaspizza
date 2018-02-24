@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.*;
 
 public class KastikeDao implements Dao<Kastike, Integer> {
-    
+
     private Database database;
 
     public KastikeDao(Database database) {
@@ -19,13 +19,17 @@ public class KastikeDao implements Dao<Kastike, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         }
-        
+
         Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
         conn.close();
+
         return k;
     }
 
@@ -40,20 +44,27 @@ public class KastikeDao implements Dao<Kastike, Integer> {
             kastikkeet.add(new Kastike(rs.getInt("id"), rs.getString("nimi")));
         }
 
+        rs.close();
+        stmt.close();
+        conn.close();
+
         return kastikkeet;
     }
-    
+
     public Kastike findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike, Pizza WHERE Kastike.id = Pizza.pohja_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
-        
+
         if (!rs.next()) {
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         }
-        
+
         Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
@@ -70,6 +81,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
         stmt.executeUpdate();
         stmt.close();
         conn.close();
+
         return object;
     }
 
@@ -77,10 +89,10 @@ public class KastikeDao implements Dao<Kastike, Integer> {
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kastike WHERE id = ?");
-        
+
         stmt.setInt(1, key);
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }
