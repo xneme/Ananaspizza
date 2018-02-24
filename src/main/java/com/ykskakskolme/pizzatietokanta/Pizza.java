@@ -13,23 +13,29 @@ public class Pizza {
     //TODO lisää sisältöä pizzaan
     private Integer id;
     private String nimi;
-    private List<Pohja> pohjat;
+    private Pohja pohja;
+    private Kastike kastike;
     private List<Tayte> taytteet;
+    private Koko koko;
     private Double hinta;
 
-    public Pizza(Integer id, String nimi, List<Pohja> pohjat, List<Tayte> taytteet, Double hinta) {
+    public Pizza(Integer id, String nimi, Pohja pohja, Kastike kastike, List<Tayte> taytteet, Koko koko, Double hinta) {
         this.id = id;
         this.nimi = nimi;
-        this.pohjat = pohjat;
+        this.pohja = pohja;
+        this.kastike = kastike;
         this.taytteet = taytteet;
+        this.koko = koko;
         this.hinta = hinta;
     }
 
     public Pizza(Integer id, String nimi) {
         this.id = id;
         this.nimi = nimi;
-        this.pohjat = new ArrayList<>();
+        this.pohja = null;
+        this.kastike = null;
         this.taytteet = new ArrayList<>();
+        this.koko = null;
         this.hinta = 4.90;
     }
 
@@ -47,12 +53,21 @@ public class Pizza {
         return id;
     }
 
-    public List<Pohja> getPohjat() {
-        return pohjat;
+    public Pohja getPohja() {
+        return pohja;
     }
 
     public List<Tayte> getTaytteet() {
         return taytteet;
     }
+
+    public Kastike getKastike() {
+        return kastike;
+    }
+
+    public Koko getKoko() {
+        return koko;
+    }
+    
     
 }

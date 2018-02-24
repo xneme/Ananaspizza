@@ -14,9 +14,7 @@
         <h3>Pohjat</h3>
         <ul>
             <li th:each="pohja : ${pohjat}">
-                    <span th:text="${pohja.nimi}">Nimi
-                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
-                    </span>
+                    <span th:text="${pohja.nimi}">Nimi</span>
             </li>
         </ul>
         
@@ -25,12 +23,22 @@
             <input type="submit"/>
         </form>
         
+        <h3>Kastikkeet</h3>
+        <ul>
+            <li th:each="kastike : ${kastikkeet}">
+                    <span th:text="${kastike.nimi}">Nimi</span>
+            </li>
+        </ul>
+        
+        <form action="/lisaakastike" method="POST">
+            <input type="text" name="kastike"/>
+            <input type="submit"/>
+        </form>
+        
         <h3>Täytteet</h3>
         <ul>
             <li th:each="tayte : ${taytteet}">
-                    <span th:text="${tayte.nimi}">Nimi
-                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
-                    </span>
+                    <span th:text="${tayte.nimi}">Nimi</span>
             </li>
         </ul>
 

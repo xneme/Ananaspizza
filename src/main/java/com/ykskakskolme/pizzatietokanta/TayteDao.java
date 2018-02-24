@@ -45,15 +45,20 @@ public class TayteDao implements Dao<Tayte, Integer> {
     
     public List<Tayte> findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Tayte, PizzaTayte, PizzaAnnos WHERE Tayte.id = PizzaTayte.tayte_id AND PizzaTayte.pizza_id = PizzaAnnos.id AND PizzaAnnos.id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Tayte, PizzaTayte, Pizza WHERE Tayte.id = PizzaTayte.tayte_id AND PizzaTayte.pizza_id = Pizza.id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
         List<Tayte> taytteet = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
+        
         while (rs.next()) {
             taytteet.add(new Tayte(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen")));
         }
-
+        
+        rs.close();
+        stmt.close();
+        conn.close();
+        
         return taytteet;
     }
 

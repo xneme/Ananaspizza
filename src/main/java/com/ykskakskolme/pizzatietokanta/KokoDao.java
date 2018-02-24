@@ -3,18 +3,18 @@ package com.ykskakskolme.pizzatietokanta;
 import java.sql.*;
 import java.util.*;
 
-public class PohjaDao implements Dao<Pohja, Integer> {
+public class KokoDao implements Dao<Koko, Integer> {
     
     private Database database;
 
-    public PohjaDao(Database database) {
+    public KokoDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Pohja findOne(Integer key) throws SQLException {
+    public Koko findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko WHERE id = ?");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -22,30 +22,30 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             return null;
         }
         
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+        Koko k = new Koko(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
         conn.close();
-        return p;
+        return k;
     }
 
     @Override
-    public List<Pohja> findAll() throws SQLException {
+    public List<Koko> findAll() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja");
-        List<Pohja> pohjat = new ArrayList<>();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko");
+        List<Koko> koot = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            pohjat.add(new Pohja(rs.getInt("id"), rs.getString("nimi")));
+            koot.add(new Koko(rs.getInt("id"), rs.getString("nimi")));
         }
 
-        return pohjat;
+        return koot;
     }
     
-    public Pohja findByPizzaId(Integer pizzaId) throws SQLException {
+    public Koko findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja, Pizza WHERE Pohja.id = Pizza.pohja_id AND Pizza.id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko, Pizza WHERE Koko.id = Pizza.pohja_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
@@ -54,18 +54,18 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             return null;
         }
         
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+        Koko k = new Koko(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
         conn.close();
-        return p;
+        return k;
     }
 
     @Override
-    public Pohja saveOrUpdate(Pohja object) throws SQLException {
+    public Koko saveOrUpdate(Koko object) throws SQLException {
         // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pohja (nimi) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Koko (nimi) VALUES (?)");
         stmt.setString(1, object.getNimi());
         stmt.executeUpdate();
         stmt.close();
@@ -76,7 +76,7 @@ public class PohjaDao implements Dao<Pohja, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pohja WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Koko WHERE id = ?");
         
         stmt.setInt(1, key);
         stmt.executeUpdate();

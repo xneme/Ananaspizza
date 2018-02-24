@@ -19,8 +19,10 @@ public class Main {
         Database database = new Database("jdbc:sqlite:pizzat.db");
 
         PohjaDao pohjaDao = new PohjaDao(database);
+        KastikeDao kastikeDao = new KastikeDao(database);
         TayteDao tayteDao = new TayteDao(database);
-        PizzaDao pizzaDao = new PizzaDao(database, tayteDao, pohjaDao);
+        KokoDao kokoDao = new KokoDao(database);
+        PizzaDao pizzaDao = new PizzaDao(database, pohjaDao, kastikeDao, tayteDao, kokoDao);
 
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
@@ -59,9 +61,11 @@ public class Main {
             HashMap map = new HashMap<>();
 
             List<Pohja> pohjat = pohjaDao.findAll();
+            List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();
 
             map.put("pohjat", pohjat);
+            map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
 
             return new ModelAndView(map, "taytteet");
@@ -97,6 +101,17 @@ public class Main {
 
             Pohja p = new Pohja(null, req.queryParams("pohja"));
             pohjaDao.saveOrUpdate(p);
+
+            res.redirect("/taytteet");
+            return "";
+        });
+        
+        Spark.post("/lisaakastike", (req, res) -> {
+            System.out.println("Saatiin: "
+                    + req.queryParams("kastike"));
+
+            Kastike k = new Kastike(null, req.queryParams("kastike"));
+            kastikeDao.saveOrUpdate(k);
 
             res.redirect("/taytteet");
             return "";

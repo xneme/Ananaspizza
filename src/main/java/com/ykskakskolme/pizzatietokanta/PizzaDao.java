@@ -13,28 +13,35 @@ public class PizzaDao implements Dao<Pizza, Integer> {
     private Database database;
     private TayteDao tayteDao;
     private PohjaDao pohjaDao;
+    private KastikeDao kastikeDao;
+    private KokoDao kokoDao;
 
-    public PizzaDao(Database database, TayteDao tayteDao, PohjaDao pohjaDao) {
+    public PizzaDao(Database database, PohjaDao pohjaDao, KastikeDao kastikeDao, TayteDao tayteDao, KokoDao kokoDao) {
         this.database = database;
         this.tayteDao = tayteDao;
         this.pohjaDao = pohjaDao;
+        this.kastikeDao = kastikeDao;
+        this.kokoDao = kokoDao;
     }
-    
+
     @Override
     public Pizza findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection(); // luodaan yhteys
         //valmistellaan statement turvallisesti
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PizzaAnnos WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pizza WHERE id = ?");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
         if (!rs.next()) {
             return null; // jos ei löytynyt mitään, palautetaan null
         }
-        // TODO pizzalla on tällä hetkellä vain nimi
+
         List<Tayte> taytteet = tayteDao.findByPizzaId(key);
-        List<Pohja> pohjat = pohjaDao.findByPizzaId(key);
-        Pizza p = new Pizza(rs.getInt("id"), rs.getString("nimi"), pohjat, taytteet, rs.getDouble("hinta"));
+        Pohja pohja = pohjaDao.findByPizzaId(key);
+        Kastike kastike = kastikeDao.findByPizzaId(key);
+        Koko koko = kokoDao.findByPizzaId(key);
+
+        Pizza p = new Pizza(rs.getInt("id"), rs.getString("nimi"), pohja, kastike, taytteet, koko, rs.getDouble("hinta"));
         rs.close();
         stmt.close();
         conn.close();
@@ -45,46 +52,46 @@ public class PizzaDao implements Dao<Pizza, Integer> {
     @Override
     public List<Pizza> findAll() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PizzaAnnos");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pizza");
         List<Pizza> pizzat = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            pizzat.add(new Pizza(rs.getInt("id"), rs.getString("nimi")));
+            int id = rs.getInt("id");
+            List<Tayte> taytteet = tayteDao.findByPizzaId(id);
+            Pohja pohja = pohjaDao.findByPizzaId(id);
+            Kastike kastike = kastikeDao.findByPizzaId(id);
+            Koko koko = kokoDao.findByPizzaId(id);
+            
+            pizzat.add(new Pizza(id, rs.getString("nimi"), pohja, kastike, taytteet, koko, rs.getDouble("hinta")));
         }
 
         return pizzat;
 
     }
-    
-    
 
     @Override
     public Pizza saveOrUpdate(Pizza object) throws SQLException {
         // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaAnnos (nimi) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pizza (nimi) VALUES (?)");
         stmt.setString(1, object.getNimi());
         stmt.executeUpdate();
         stmt.close();
         conn.close();
         return object;
     }
-    
- 
-    
 
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM PizzaAnnos WHERE id=?");
-        
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pizza WHERE id=?");
+
         stmt.setInt(1, key);
         stmt.executeUpdate();
-        
+
         stmt.close();
         conn.close();
     }
-    
-    
+
 }

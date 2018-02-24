@@ -1,10 +1,15 @@
 BEGIN TRANSACTION;
 
-CREATE TABLE PizzaAnnos (
+CREATE TABLE Pizza (
     id INTEGER PRIMARY KEY,
     nimi TEXT,
-    koko TEXT,
-    hinta DOUBLE
+    pohja_id INTEGER,
+    kastike_id INTEGER,
+    koko_id INTEGER,
+    hinta DOUBLE,
+    FOREIGN KEY (pohja_id) REFERENCES Pohja(id),
+    FOREIGN KEY (kastike_id) REFERENCES Kastike(id),
+    FOREIGN KEY (koko_id) REFERENCES Koko(id)
 );
 
 CREATE TABLE Tayte (
@@ -13,12 +18,17 @@ CREATE TABLE Tayte (
     vegaaninen  BOOLEAN
 );
 
-CREATE TABLE Pohjakastike (
+CREATE TABLE Pohja (
     id INTEGER PRIMARY KEY,
     nimi TEXT
 );
 
-CREATE TABLE Pohja (
+CREATE TABLE Kastike (
+    id INTEGER PRIMARY KEY,
+    nimi TEXT
+);
+
+CREATE TABLE Koko (
     id INTEGER PRIMARY KEY,
     nimi TEXT
 );
@@ -28,18 +38,4 @@ CREATE TABLE PizzaTayte (
     tayte_id INTEGER,
     FOREIGN KEY (pizza_id) REFERENCES PizzaAnnos(id),
     FOREIGN KEY (tayte_id) REFERENCES Tayte(id)
-);
-
-CREATE TABLE PizzaPohjakastike (
-    pizza_id INTEGER,
-    pohjakastike_id INTEGER,
-    FOREIGN KEY (pizza_id) REFERENCES PizzaAnnos(id),
-    FOREIGN KEY (pohjakastike_id) REFERENCES Pohjakastike(id)
-);
-
-CREATE TABLE PizzaPohja (
-    pizza_id INTEGER,
-    pohja_id INTEGER,
-    FOREIGN KEY (pizza_id) REFERENCES PizzaAnnos(id),
-    FOREIGN KEY (pohja_id) REFERENCES Pohja(id)
 );
