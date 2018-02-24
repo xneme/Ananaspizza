@@ -8,14 +8,26 @@
 
     <body>
         <h1>Lisää pizza</h1>
-        <form action="/" method="POST">
-            <input type="text" name="pizza"/>
-            <input type="submit"/>
-        </form>
         
-        <select th:field="*{tayte}">
-              <option th:each="tayte : ${taytteet}" th:value="${tayte.id}" th:text="${tayte.nimi}">Täyte</option>
-        </select>
+        <form action="/pizzantaytteet" method="POST">
+            Valitse pohja:
+            <select name="pohjabox" th:field="*{pohja}">
+                <option th:each="pohja : ${pohjat}" th:value="${pohja.id}" th:text="${pohja.nimi}">Pohja</option>
+            </select>
+            <br />
+            Valitse kastike:
+            <select name="kastikebox" th:field="*{kastike}">
+                <option th:each="kastike : ${kastikkeet}" th:value="${kastike.id}" th:text="${kastike.nimi}">Kastike</option>
+            </select>
+            <br />
+            Pizzan hinta:
+            <input type="number" name="hinta"/> euroa
+            <br />
+            Pizzan nimi:
+            <input type="text" name="pizza"/> 
+            <br />
+            <input type="submit" value="Lisää pizza"/>
+        </form>
         
         <a th:href="@{~/}">
             Takaisin etusivulle

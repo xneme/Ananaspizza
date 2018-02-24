@@ -53,9 +53,16 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.get("/lisays", (req, res) -> {
-            List<Tayte> taytteet = tayteDao.findAll();
             HashMap map = new HashMap<>();
-             map.put("taytteet", taytteet);
+            
+            List<Pohja> pohjat = pohjaDao.findAll();
+            List<Kastike> kastikkeet = kastikeDao.findAll();
+            List<Tayte> taytteet = tayteDao.findAll();
+
+            map.put("pohjat", pohjat);
+            map.put("kastikkeet", kastikkeet);
+            map.put("taytteet", taytteet);
+            
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
 
@@ -72,8 +79,10 @@ public class Main {
 
             return new ModelAndView(map, "taytteet");
         }, new ThymeleafTemplateEngine());
-
-        Spark.post("/", (req, res) -> {
+        
+        Spark.post("/pizzantaytteet", (req, res) -> {
+            String nimi = req.queryParams("pizza");
+            
             System.out.println("Saatiin: "
                     + req.queryParams("pizza"));
 
