@@ -85,7 +85,7 @@ public class Main {
 
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
-
+        
         Spark.get("/taytteet", (req, res) -> {
             HashMap map = new HashMap<>();
 
@@ -106,6 +106,33 @@ public class Main {
             map.put("eikastiketta", eikastiketta);
 
             return new ModelAndView(map, "taytteet");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/tilastot", (req, res) -> {
+            HashMap map = new HashMap<>();
+
+            List<Tayte> taytteet = tayteDao.findAllInPizza();
+            Map<String, Integer> tayteMaarat = new HashMap<>();
+            
+            for (int i = 0; i < taytteet.size(); i++) {
+                Tayte t = taytteet.get(i);
+                
+                if (!tayteMaarat.containsKey(t.getNimi())) {
+                    tayteMaarat.put(t.getNimi(), 1);
+                } else {
+                    tayteMaarat.put(t.getNimi(), tayteMaarat.get(t.getNimi()) + 1);
+                }
+            }
+            
+            List<String> tayteTilastot = new ArrayList<>();
+            
+            tayteMaarat.entrySet().stream().forEach(e -> {
+                tayteTilastot.add(e.getKey() + ": " + e.getValue());
+            });
+            
+            map.put("tayteTilastot", tayteTilastot);
+
+            return new ModelAndView(map, "tilastot");
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/lisaapizza", (req, res) -> {

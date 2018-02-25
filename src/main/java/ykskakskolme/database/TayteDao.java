@@ -79,6 +79,23 @@ public class TayteDao implements Dao<Tayte, Integer> {
         
         return taytteet;
     }
+    
+    public List<Tayte> findAllInPizza() throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PizzaTayte");
+        List<Tayte> taytteet = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            taytteet.add(this.findOne(rs.getInt("tayte_id")));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return taytteet;
+    }
 
     public List<Tayte> findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();

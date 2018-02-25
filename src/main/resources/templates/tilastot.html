@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Tilastotietoa pizzoista</title>
+        <style>
+            .btn-link{
+                border:none;
+                outline:none;
+                background:none;
+                cursor:pointer;
+                color:#0000EE;
+                padding:0;
+                text-decoration:underline;
+                font-family:inherit;
+                font-size:inherit;
+            }
+            .btn-link:active{
+                color:#FF0000;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Tilastotietoa pizzoista</h1>
+        
+        <h3>Käytetyimmät täytteet pizzoissa</h3>
+        <ul>
+            <li th:each="rivi : ${tayteTilastot}">
+                <span th:text="${rivi}">rivi</span>
+            </li>
+        </ul>
+        
+        <br />
+        <a th:href="@{~/}">
+            Takaisin etusivulle
+        </a>
+    </body>
+</html>
