@@ -4,6 +4,22 @@
     <head>
         <title>Pizza</title>
         <meta charset="utf-8" />
+        <style>
+            .btn-link{
+                border:none;
+                outline:none;
+                background:none;
+                cursor:pointer;
+                color:#0000EE;
+                padding:0;
+                text-decoration:underline;
+                font-family:inherit;
+                font-size:inherit;
+            }
+            .btn-link:active{
+                color:#FF0000;
+            }
+        </style>
     </head>
 
     <body>
@@ -11,25 +27,30 @@
         <h3>Pohja</h3>
         <ul>
             <li th:each="pohja : ${pizza.pohja}">
-                    <span th:text="${pohja.nimi}">Nimi
-                    </span>
+                <span th:text="${pohja.nimi}">Nimi
+                </span>
             </li>
         </ul>
         <h3>Kastike</h3>
         <ul>
             <li th:each="kastike : ${pizza.kastike}">
-                    <span th:text="${kastike.nimi}">Nimi
-                    </span>
+                <span th:text="${kastike.nimi}">Nimi
+                </span>
             </li>
         </ul>
         <h3>Täytteet</h3>
         <ul>
             <li th:each="tayte : ${pizza.taytteet}">
-                    <span th:text="${tayte.nimi}">Nimi
-                    </span>
+                <span th:text="${tayte.nimi}">Nimi
+                </span>
             </li>
         </ul>
         <a th:href="@{~/pizzataytteet/{id}(id=${pizza.id})}">Muokkaa täytteitä</a>
+        <br />
+        <form method="POST" th:action="@{~/poistapizza/{Id}(Id=${pizza.id})}">
+            <input type="submit" value="Poista" class="btn-link"/>
+        </form>
+        <br />
         <a th:href="@{~/}">Takaisin etusivulle</a>
     </body>
 </html>

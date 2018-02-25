@@ -30,7 +30,7 @@
             <li th:each="pohja : ${pohjat}">
                 <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}">
                 <span th:text="${pohja.nimi}">Nimi</span>
-                <input type="submit" value="Poista" class="btn-link"/></form>
+                (<input type="submit" value="Poista" class="btn-link"/>)</form>
             </li>
         </ul>
 
@@ -45,7 +45,7 @@
             <li th:each="kastike : ${kastikkeet}">
                 <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}">
                 <span th:text="${kastike.nimi}">Nimi</span>
-                <input type="submit" value="Poista" class="btn-link"/></form>
+                (<input type="submit" value="Poista" class="btn-link"/>)</form>
             </li>
         </ul>
 
@@ -59,7 +59,7 @@
             <li th:each="tayte : ${taytteet}">
                 <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}">
                 <span th:text="${tayte.nimi}">Nimi</span>
-                <input type="submit" value="Poista" class="btn-link"/></form>
+                (<input type="submit" value="Poista" class="btn-link"/>)</form>
             </li>
         </ul>
 
@@ -68,7 +68,7 @@
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää täyte"/>
         </form>
-
+        <br />
         <a th:href="@{~/}">
             Takaisin etusivulle
         </a>
