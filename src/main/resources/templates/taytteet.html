@@ -3,6 +3,22 @@
 
     <head>
         <title>Pohjien ja täytteiden listaus</title>
+        <style>
+            .btn-link{
+                border:none;
+                outline:none;
+                background:none;
+                cursor:pointer;
+                color:#0000EE;
+                padding:0;
+                text-decoration:underline;
+                font-family:inherit;
+                font-size:inherit;
+            }
+            .btn-link:active{
+                color:#FF0000;
+            }
+        </style>
     </head>
 
     <body>
@@ -12,8 +28,9 @@
         <ul>
             <li><span th:text="${eipohjaa.nimi}">Nimi</span></li>
             <li th:each="pohja : ${pohjat}">
+                <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}">
                 <span th:text="${pohja.nimi}">Nimi</span>
-                <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}"><input type="submit" value="Poista"/></form>
+                <input type="submit" value="Poista" class="btn-link"/></form>
             </li>
         </ul>
 
@@ -26,8 +43,9 @@
         <ul>
             <li><span th:text="${eikastiketta.nimi}">Nimi</span></li>
             <li th:each="kastike : ${kastikkeet}">
+                <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}">
                 <span th:text="${kastike.nimi}">Nimi</span>
-                <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}"><input type="submit" value="Poista"/></form>
+                <input type="submit" value="Poista" class="btn-link"/></form>
             </li>
         </ul>
 
@@ -39,8 +57,9 @@
         <h3>Täytteet</h3>
         <ul>
             <li th:each="tayte : ${taytteet}">
+                <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}">
                 <span th:text="${tayte.nimi}">Nimi</span>
-                <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}"><input type="submit" value="Poista"/></form>
+                <input type="submit" value="Poista" class="btn-link"/></form>
             </li>
         </ul>
 
