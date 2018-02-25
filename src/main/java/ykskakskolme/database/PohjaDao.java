@@ -3,6 +3,7 @@ package ykskakskolme.database;
 import ykskakskolme.domain.Pohja;
 import java.sql.*;
 import java.util.*;
+import ykskakskolme.domain.Tilastoalkio;
 
 public class PohjaDao implements Dao<Pohja, Integer> {
 
@@ -105,6 +106,23 @@ public class PohjaDao implements Dao<Pohja, Integer> {
         
         stmt.close();
         conn.close();
+    }
+    
+    public List<Tilastoalkio> tilasto() throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT Pohja.nimi AS nimi, COUNT(*) AS maara FROM Pohja, Pizza WHERE Pizza.pohja_id = pohja.id GROUP BY Pohja.nimi ORDER BY maara DESC");
+        ResultSet rs = stmt.executeQuery();
+        List<Tilastoalkio> tilasto = new ArrayList<>();
+        
+        while (rs.next()) {
+            tilasto.add(new Tilastoalkio(rs.getString("nimi"), rs.getInt("maara")));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return tilasto;
     }
 
 }

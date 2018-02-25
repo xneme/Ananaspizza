@@ -23,6 +23,12 @@
     
     <body>
         <h1>Tilastotietoa pizzoista</h1>
+        <h3>Käytetyimmät pohjat pizzoissa</h3>
+        <ul>
+            <li th:each="pohja : ${pohjatilasto}">
+                <span>[[${pohja.nimi}]]: [[${pohja.maara}]]</span>
+            </li>
+        </ul>
         
         <h3>Käytetyimmät täytteet pizzoissa</h3>
         <ul>

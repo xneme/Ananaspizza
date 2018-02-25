@@ -111,6 +111,9 @@ public class Main {
         Spark.get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();
 
+            List<Tilastoalkio> pohjatilasto = pohjaDao.tilasto();
+            map.put("pohjatilasto", pohjatilasto);
+            
             List<Tayte> taytteet = tayteDao.findAllInPizza();
             Map<String, Integer> tayteMaarat = new HashMap<>();
             
