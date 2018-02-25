@@ -90,13 +90,15 @@ public class KastikeDao implements Dao<Kastike, Integer> {
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
         
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kastike WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Pizza SET kastike_id = 1 WHERE kastike_id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
         
-        stmt = conn.prepareStatement("UPDATE Pizza SET kastike_id = 1 WHERE kastike_id = ?");
+        stmt = conn.prepareStatement("DELETE FROM Kastike WHERE id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
+        
+        
         
         stmt.close();
         conn.close();

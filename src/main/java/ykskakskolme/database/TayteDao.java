@@ -117,15 +117,17 @@ public class TayteDao implements Dao<Tayte, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Tayte WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE tayte_id = ?");
+
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
+        
+        stmt = conn.prepareStatement("DELETE FROM Tayte WHERE id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();
 
-        stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE tayte_id = ?");
-
-        stmt.setInt(1, key);
-        stmt.executeUpdate();
+        
 
         stmt.close();
         conn.close();

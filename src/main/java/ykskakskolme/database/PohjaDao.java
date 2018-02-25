@@ -95,11 +95,11 @@ public class PohjaDao implements Dao<Pohja, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pohja WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("UPDATE Pizza SET pohja_id = 1 WHERE pohja_id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
-
-        stmt = conn.prepareStatement("UPDATE Pizza SET pohja_id = 1 WHERE pohja_id = ?");
+        
+        stmt = conn.prepareStatement("DELETE FROM Pohja WHERE id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
         
