@@ -54,7 +54,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
 
     public Kastike findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike, Pizza WHERE Kastike.id = Pizza.pohja_id AND Pizza.id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike, Pizza WHERE Kastike.id = Pizza.kastike_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
