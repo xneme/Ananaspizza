@@ -74,7 +74,7 @@ public class TayteDao implements Dao<Tayte, Integer> {
     
     public List<Tilastoalkio> tilasto() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT nimi, COUNT(*) AS maara FROM (SELECT DISTINCT Tayte.nimi AS nimi, Pizza.id FROM Tayte, Pizza, PizzaTayte WHERE PizzaTayte.pizza_id = Pizza.id AND PizzaTayte.tayte_id = Tayte.id) GROUP BY nimi ORDER BY maara DESC");
+        PreparedStatement stmt = conn.prepareStatement("SELECT nimi, COUNT(*) AS maara FROM (SELECT DISTINCT Tayte.nimi AS nimi, Pizza.id FROM Tayte, Pizza, PizzaTayte WHERE PizzaTayte.pizza_id = Pizza.id AND PizzaTayte.tayte_id = Tayte.id) AS alikyselyllaonpakkoollanimi GROUP BY nimi ORDER BY maara DESC");
         ResultSet rs = stmt.executeQuery();
         List<Tilastoalkio> tilasto = new ArrayList<>();
         
