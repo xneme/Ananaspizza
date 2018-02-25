@@ -3,6 +3,7 @@ package ykskakskolme.database;
 import ykskakskolme.domain.Tayte;
 import java.sql.*;
 import java.util.*;
+import ykskakskolme.domain.Tilastoalkio;
 
 public class TayteDao implements Dao<Tayte, Integer> {
 
@@ -34,32 +35,6 @@ public class TayteDao implements Dao<Tayte, Integer> {
         conn.close();
         
         return t;
-    }
-
-    public List<Tayte> tyhjaLista() throws SQLException {
-        Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Tayte WHERE name = ?");
-        stmt.setString(1, "Ananas");
-
-        List<Tayte> taytteet = new ArrayList<>();
-
-        ResultSet rs = stmt.executeQuery();
-        if (!rs.next()) {
-            rs.close();
-            stmt.close();
-            conn.close();
-            
-            return taytteet;
-        }
-
-        Tayte ananas = new Tayte(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
-        taytteet.add(ananas);
-
-        rs.close();
-        stmt.close();
-        conn.close();
-        
-        return taytteet;
     }
 
     @Override
@@ -95,6 +70,23 @@ public class TayteDao implements Dao<Tayte, Integer> {
         conn.close();
 
         return taytteet;
+    }
+    
+    public List<Tilastoalkio> tilasto() throws SQLException {
+        Connection conn = database.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("SELECT nimi, COUNT(*) AS maara FROM (SELECT DISTINCT Tayte.nimi AS nimi, Pizza.id FROM Tayte, Pizza, PizzaTayte WHERE PizzaTayte.pizza_id = Pizza.id AND PizzaTayte.tayte_id = Tayte.id) GROUP BY nimi ORDER BY maara DESC");
+        ResultSet rs = stmt.executeQuery();
+        List<Tilastoalkio> tilasto = new ArrayList<>();
+        
+        while (rs.next()) {
+            tilasto.add(new Tilastoalkio(rs.getString("nimi"), rs.getInt("maara")));
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return tilasto;
     }
 
     public List<Tayte> findByPizzaId(Integer pizzaId) throws SQLException {

@@ -85,7 +85,7 @@ public class Main {
 
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.get("/taytteet", (req, res) -> {
             HashMap map = new HashMap<>();
 
@@ -95,7 +95,7 @@ public class Main {
             // poistetaan listalta eipohjaa ja eikastiketta
             pohjat.remove(0);
             kastikkeet.remove(0);
-            
+
             Pohja eipohjaa = pohjaDao.findOne(1);
             Kastike eikastiketta = kastikeDao.findOne(1);
 
@@ -107,33 +107,15 @@ public class Main {
 
             return new ModelAndView(map, "taytteet");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.get("/tilastot", (req, res) -> {
             HashMap map = new HashMap<>();
 
             List<Tilastoalkio> pohjatilasto = pohjaDao.tilasto();
+            List<Tilastoalkio> taytetilasto = tayteDao.tilasto();
+           
             map.put("pohjatilasto", pohjatilasto);
-            
-            List<Tayte> taytteet = tayteDao.findAllInPizza();
-            Map<String, Integer> tayteMaarat = new HashMap<>();
-            
-            for (int i = 0; i < taytteet.size(); i++) {
-                Tayte t = taytteet.get(i);
-                
-                if (!tayteMaarat.containsKey(t.getNimi())) {
-                    tayteMaarat.put(t.getNimi(), 1);
-                } else {
-                    tayteMaarat.put(t.getNimi(), tayteMaarat.get(t.getNimi()) + 1);
-                }
-            }
-            
-            List<String> tayteTilastot = new ArrayList<>();
-            
-            tayteMaarat.entrySet().stream().forEach(e -> {
-                tayteTilastot.add(e.getKey() + ": " + e.getValue());
-            });
-            
-            map.put("tayteTilastot", tayteTilastot);
+            map.put("taytetilasto", taytetilasto);
 
             return new ModelAndView(map, "tilastot");
         }, new ThymeleafTemplateEngine());
@@ -222,12 +204,12 @@ public class Main {
         Spark.post("/poistakastike/:id", (req, res) -> {
             System.out.println("Poistetaan: "
                     + req.params(":id"));
-            
+
             if (req.params(":id").equals("1")) {
                 res.redirect("/taytteet");
                 return "";
             }
-            
+
             kastikeDao.delete(Integer.parseInt(req.params(":id")));
 
             res.redirect("/taytteet");
@@ -242,7 +224,7 @@ public class Main {
                 res.redirect("/taytteet");
                 return "";
             }
-            
+
             tayteDao.delete(Integer.parseInt(req.params(":id")));
 
             res.redirect("/taytteet");
