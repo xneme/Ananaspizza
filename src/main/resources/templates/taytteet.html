@@ -10,26 +10,30 @@
 
         <h3>Pohjat</h3>
         <ul>
+            <li><span th:text="${eipohjaa.nimi}">Nimi</span></li>
             <li th:each="pohja : ${pohjat}">
                 <span th:text="${pohja.nimi}">Nimi</span>
+                <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}"><input type="submit" value="Poista"/></form>
             </li>
         </ul>
 
         <form action="/lisaapohja" method="POST">
             <input type="text" name="pohja"/>
-            <input type="submit"/>
+            <input type="submit" value="Lisää pohja"/>
         </form>
 
         <h3>Kastikkeet</h3>
         <ul>
+            <li><span th:text="${eikastiketta.nimi}">Nimi</span></li>
             <li th:each="kastike : ${kastikkeet}">
                 <span th:text="${kastike.nimi}">Nimi</span>
+                <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}"><input type="submit" value="Poista"/></form>
             </li>
         </ul>
 
         <form action="/lisaakastike" method="POST">
             <input type="text" name="kastike"/>
-            <input type="submit"/>
+            <input type="submit" value="Lisää kastike"/>
         </form>
 
         <h3>Täytteet</h3>
@@ -43,7 +47,7 @@
         <form action="/lisaatayte" method="POST">
             <input type="text" name="tayte"/>
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
-            <input type="submit"/>
+            <input type="submit" value="Lisää täyte"/>
         </form>
 
         <a th:href="@{~/}">
