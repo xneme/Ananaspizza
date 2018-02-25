@@ -56,7 +56,7 @@ public class KokoDao implements Dao<Koko, Integer> {
 
     public Koko findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko, Pizza WHERE Koko.id = Pizza.pohja_id AND Pizza.id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Koko, Pizza WHERE Koko.id = Pizza.koko_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
