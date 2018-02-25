@@ -46,7 +46,7 @@ public class Main {
             map.put("pizza", p);
             return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.get("/pizzataytteet/:id", (req, res) -> {
             HashMap map = new HashMap<>();
             //Parametri osoitteesta
@@ -59,11 +59,11 @@ public class Main {
             map.put("taytteet", taytteet);
             return new ModelAndView(map, "pizzataytteet");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/pizzataytteet/:id", (req, res) -> {
             int pizzaId = Integer.parseInt(req.params(":id"));
             int tayteId = Integer.parseInt(req.queryParams("taytebox"));
-            
+
             pizzaDao.lisaaTayte(pizzaId, tayteId);
 
             res.redirect("/pizzataytteet/" + pizzaId);
@@ -72,7 +72,7 @@ public class Main {
 
         Spark.get("/lisays", (req, res) -> {
             HashMap map = new HashMap<>();
-            
+
             List<Pohja> pohjat = pohjaDao.findAll();
             List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();
@@ -82,7 +82,7 @@ public class Main {
             map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
             map.put("koot", koot);
-            
+
             return new ModelAndView(map, "lisays");
         }, new ThymeleafTemplateEngine());
 
@@ -92,31 +92,31 @@ public class Main {
             List<Pohja> pohjat = pohjaDao.findAll();
             List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();
-            
+
             map.put("pohjat", pohjat);
             map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
 
             return new ModelAndView(map, "taytteet");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/lisaapizza", (req, res) -> {
             String nimi = req.queryParams("pizza");
-            
+
             System.out.println("Saatiin: "
                     + req.queryParams("pizza") + " "
                     + req.queryParams("kokobox") + " "
                     + req.queryParams("pohjabox") + " "
                     + req.queryParams("kastikebox") + " "
                     + req.queryParams("hinta"));
-            
+
             int pohjaId = Integer.parseInt(req.queryParams("pohjabox"));
             int kastikeId = Integer.parseInt(req.queryParams("kastikebox"));
             int kokoId = Integer.parseInt(req.queryParams("kokobox"));
             double hinta = Double.parseDouble(req.queryParams("hinta"));
-            
+
             int id = pizzaDao.saveRaw(nimi, pohjaId, kastikeId, kokoId, hinta);
-            
+
             res.redirect("/pizzataytteet/" + id);
             return "";
         });
@@ -144,7 +144,7 @@ public class Main {
             res.redirect("/taytteet");
             return "";
         });
-        
+
         Spark.post("/lisaakastike", (req, res) -> {
             System.out.println("Saatiin: "
                     + req.queryParams("kastike"));
@@ -165,11 +165,46 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        
+
+        Spark.post("/poistapohja/:id", (req, res) -> {
+            System.out.println("Poistetaan: "
+                    + req.params(":id"));
+
+            if (req.params(":id").equals("1")) {
+                res.redirect("/taytteet");
+                return "";
+            }
+
+            pohjaDao.delete(Integer.parseInt(req.params(":id")));
+
+            res.redirect("/taytteet");
+            return "";
+        });
+
+        Spark.post("/poistakastike/:id", (req, res) -> {
+            System.out.println("Poistetaan: "
+                    + req.params(":id"));
+            
+            if (req.params(":id").equals("1")) {
+                res.redirect("/taytteet");
+                return "";
+            }
+            
+            kastikeDao.delete(Integer.parseInt(req.params(":id")));
+
+            res.redirect("/taytteet");
+            return "";
+        });
+
         Spark.post("/poistatayte/:id", (req, res) -> {
             System.out.println("Poistetaan: "
                     + req.params(":id"));
 
+            if (req.params(":id").equals("1")) {
+                res.redirect("/taytteet");
+                return "";
+            }
+            
             tayteDao.delete(Integer.parseInt(req.params(":id")));
 
             res.redirect("/taytteet");

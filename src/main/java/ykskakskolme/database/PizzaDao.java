@@ -5,11 +5,7 @@
  */
 package ykskakskolme.database;
 
-import ykskakskolme.domain.Pizza;
-import ykskakskolme.domain.Pohja;
-import ykskakskolme.domain.Tayte;
-import ykskakskolme.domain.Koko;
-import ykskakskolme.domain.Kastike;
+import ykskakskolme.domain.*;
 import java.util.*;
 import java.sql.*;
 
@@ -140,8 +136,12 @@ public class PizzaDao implements Dao<Pizza, Integer> {
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pizza WHERE id=?");
-
+        
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pizza WHERE id = ?");
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
+        
+        stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE pizza_id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
 
