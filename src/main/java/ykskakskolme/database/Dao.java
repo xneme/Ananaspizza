@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.database;
 
 import java.util.*;
 import java.sql.*;

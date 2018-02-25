@@ -1,20 +1,21 @@
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.database;
 
+import ykskakskolme.domain.Kastike;
 import java.sql.*;
 import java.util.*;
 
-public class PohjaDao implements Dao<Pohja, Integer> {
+public class KastikeDao implements Dao<Kastike, Integer> {
 
     private Database database;
 
-    public PohjaDao(Database database) {
+    public KastikeDao(Database database) {
         this.database = database;
     }
 
     @Override
-    public Pohja findOne(Integer key) throws SQLException {
+    public Kastike findOne(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike WHERE id = ?");
         stmt.setInt(1, key);
 
         ResultSet rs = stmt.executeQuery();
@@ -22,40 +23,38 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             rs.close();
             stmt.close();
             conn.close();
-
             return null;
         }
 
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
-
+        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
         conn.close();
 
-        return p;
+        return k;
     }
 
     @Override
-    public List<Pohja> findAll() throws SQLException {
+    public List<Kastike> findAll() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja");
-        List<Pohja> pohjat = new ArrayList<>();
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike");
+        List<Kastike> kastikkeet = new ArrayList<>();
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            pohjat.add(new Pohja(rs.getInt("id"), rs.getString("nimi")));
+            kastikkeet.add(new Kastike(rs.getInt("id"), rs.getString("nimi")));
         }
 
         rs.close();
         stmt.close();
         conn.close();
 
-        return pohjat;
+        return kastikkeet;
     }
 
-    public Pohja findByPizzaId(Integer pizzaId) throws SQLException {
+    public Kastike findByPizzaId(Integer pizzaId) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pohja, Pizza WHERE Pohja.id = Pizza.pohja_id AND Pizza.id = ?");
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Kastike, Pizza WHERE Kastike.id = Pizza.pohja_id AND Pizza.id = ?");
         stmt.setInt(1, pizzaId);
 
         ResultSet rs = stmt.executeQuery();
@@ -64,37 +63,33 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             rs.close();
             stmt.close();
             conn.close();
-            
             return null;
         }
 
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
-        
+        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
         rs.close();
         stmt.close();
         conn.close();
-        
-        return p;
+        return k;
     }
 
     @Override
-    public Pohja saveOrUpdate(Pohja object) throws SQLException {
+    public Kastike saveOrUpdate(Kastike object) throws SQLException {
         // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pohja (nimi) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kastike (nimi) VALUES (?)");
         stmt.setString(1, object.getNimi());
         stmt.executeUpdate();
-        
         stmt.close();
         conn.close();
-        
+
         return object;
     }
 
     @Override
     public void delete(Integer key) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Pohja WHERE id = ?");
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kastike WHERE id = ?");
 
         stmt.setInt(1, key);
         stmt.executeUpdate();

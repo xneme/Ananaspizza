@@ -1,13 +1,8 @@
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.runko;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.stream.Collectors;
+import ykskakskolme.domain.*;
+import ykskakskolme.database.*;
+import java.util.*;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.thymeleaf.ThymeleafTemplateEngine;

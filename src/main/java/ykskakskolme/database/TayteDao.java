@@ -1,5 +1,6 @@
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.database;
 
+import ykskakskolme.domain.Tayte;
 import java.sql.*;
 import java.util.*;
 

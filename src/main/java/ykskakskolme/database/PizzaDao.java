@@ -3,8 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.database;
 
+import ykskakskolme.domain.Pizza;
+import ykskakskolme.domain.Pohja;
+import ykskakskolme.domain.Tayte;
+import ykskakskolme.domain.Koko;
+import ykskakskolme.domain.Kastike;
 import java.util.*;
 import java.sql.*;
 

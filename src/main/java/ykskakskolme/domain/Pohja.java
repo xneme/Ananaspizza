@@ -1,11 +1,11 @@
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.domain;
 
-public class Koko {
-
+public class Pohja {
+    
     private Integer id;
     private String nimi;
 
-    public Koko(Integer id, String nimi) {
+    public Pohja(Integer id, String nimi) {
         this.id = id;
         this.nimi = nimi;
     }

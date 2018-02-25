@@ -1,4 +1,4 @@
-package com.ykskakskolme.pizzatietokanta;
+package ykskakskolme.domain;
 
 public class Tayte {
 
