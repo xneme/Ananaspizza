@@ -141,7 +141,7 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         stmt.setInt(1, key);
         stmt.executeUpdate();
         
-        stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE pizza_id = ?");
+        stmt = conn.prepareStatement("DELETE * FROM PizzaTayte WHERE pizza_id = ?");
         stmt.setInt(1, key);
         stmt.executeUpdate();
 
