@@ -101,6 +101,10 @@ public class TayteDao implements Dao<Tayte, Integer> {
             taytteet.add(new Tayte(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen")));
         }
 
+        if (!taytteet.isEmpty()) {
+            taytteet.get(0).setNoDelete();
+        }
+        
         rs.close();
         stmt.close();
         conn.close();

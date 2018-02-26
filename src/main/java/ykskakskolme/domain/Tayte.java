@@ -32,4 +32,7 @@ public class Tayte {
         return ret;
     }
     
+    public void setNoDelete() {
+        this.id = -1;
+    }
 }
