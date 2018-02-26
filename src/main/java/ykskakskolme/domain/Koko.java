@@ -18,4 +18,6 @@ public class Koko {
         return nimi;
     }
     
+    
+    
 }

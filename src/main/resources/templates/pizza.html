@@ -25,6 +25,10 @@
     <body>
         <h1 th:text="${pizza.nimi}">Pizzan nimi</h1>
         <span th:text="@{Hinta: {hinta}(hinta=${pizza.hinta})}">Hinta</span>€
+        <br />
+        <span th:text="'Koko: '+${pizza.koko.nimi}">Koko</span>
+        <br />
+        <span th:text="${vegaani}">Vegaaninen</span>
         <h3>Pohja</h3>
         <ul>
             <li th:each="pohja : ${pizza.pohja}">

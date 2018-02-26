@@ -40,9 +40,10 @@ public class Pizza {
         this.koko = null;
         this.hinta = 4.90;
     }
-
     
-    
+    public boolean vegaaninen() {
+        return taytteet.stream().allMatch(t -> t.getVegaaninen());
+    }
     public Double getHinta() {
         return hinta;
     }

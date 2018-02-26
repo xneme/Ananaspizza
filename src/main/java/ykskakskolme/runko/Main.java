@@ -42,8 +42,13 @@ public class Main {
             Integer pizzaId = Integer.parseInt(req.params(":id"));
             //Haetaan pizza
             Pizza p = pizzaDao.findOne(pizzaId);
+            String vegaani = "Vegaaninen";
+            if (p.vegaaninen()) {
+                vegaani = "Vegaaniton";
+            }
             //Näytetään pizza
             map.put("pizza", p);
+            map.put("vegaani", vegaani);
             return new ModelAndView(map, "pizza");
         }, new ThymeleafTemplateEngine());
 
@@ -230,5 +235,7 @@ public class Main {
             res.redirect("/taytteet");
             return "";
         });
+        
     }
+    
 }
