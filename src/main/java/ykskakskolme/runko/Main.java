@@ -42,9 +42,9 @@ public class Main {
             Integer pizzaId = Integer.parseInt(req.params(":id"));
             //Haetaan pizza
             Pizza p = pizzaDao.findOne(pizzaId);
-            String vegaani = "Vegaaninen";
+            String vegaani = "Vegaaniton";
             if (p.vegaaninen()) {
-                vegaani = "Vegaaniton";
+                vegaani = "Vegaaninen";
             }
             //Näytetään pizza
             map.put("pizza", p);
