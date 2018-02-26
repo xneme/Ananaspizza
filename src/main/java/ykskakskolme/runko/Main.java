@@ -118,8 +118,10 @@ public class Main {
 
             List<Tilastoalkio> pohjatilasto = pohjaDao.tilasto();
             List<Tilastoalkio> taytetilasto = tayteDao.tilasto();
+            List<Tilastoalkio> kastiketilasto = kastikeDao.tilasto();
            
             map.put("pohjatilasto", pohjatilasto);
+            map.put("kastiketilasto", kastiketilasto);
             map.put("taytetilasto", taytetilasto);
 
             return new ModelAndView(map, "tilastot");
