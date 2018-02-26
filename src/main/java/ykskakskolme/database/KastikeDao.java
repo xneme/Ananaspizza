@@ -107,7 +107,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
     
     public List<Tilastoalkio> tilasto() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT Kastike.nimi AS nimi, COUNT(*) AS maara FROM Kastike, Pizza WHERE Pizza.kastike_id = kastike.id GROUP BY Kastike.nimi ORDER BY maara DESC");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Kastike.nimi AS nimi, COUNT(*) AS maara FROM Kastike, Pizza WHERE Pizza.kastike_id = kastike.id GROUP BY Kastike.nimi ORDER BY maara DESC LIMIT 5");
         ResultSet rs = stmt.executeQuery();
         List<Tilastoalkio> tilasto = new ArrayList<>();
         

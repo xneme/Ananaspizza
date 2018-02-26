@@ -110,7 +110,7 @@ public class PohjaDao implements Dao<Pohja, Integer> {
     
     public List<Tilastoalkio> tilasto() throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT Pohja.nimi AS nimi, COUNT(*) AS maara FROM Pohja, Pizza WHERE Pizza.pohja_id = pohja.id GROUP BY Pohja.nimi ORDER BY maara DESC");
+        PreparedStatement stmt = conn.prepareStatement("SELECT Pohja.nimi AS nimi, COUNT(*) AS maara FROM Pohja, Pizza WHERE Pizza.pohja_id = pohja.id GROUP BY Pohja.nimi ORDER BY maara DESC LIMIT 5");
         ResultSet rs = stmt.executeQuery();
         List<Tilastoalkio> tilasto = new ArrayList<>();
         
