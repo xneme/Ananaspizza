@@ -74,6 +74,16 @@ public class Main {
             res.redirect("/pizzataytteet/" + pizzaId);
             return "";
         });
+        
+         Spark.post("/pizzataytteet/:pizza/delete/:tayte", (req, res) -> {
+            int pizzaId = Integer.parseInt(req.params(":pizza"));
+            int tayteId = Integer.parseInt(req.params(":tayte"));
+
+            pizzaDao.poistaTayte(tayteId);
+
+            res.redirect("/pizzataytteet/" + pizzaId);
+            return "";
+        });
 
         Spark.get("/lisays", (req, res) -> {
             HashMap map = new HashMap<>();
@@ -93,7 +103,7 @@ public class Main {
 
         Spark.get("/taytteet", (req, res) -> {
             HashMap map = new HashMap<>();
-
+            
             List<Pohja> pohjat = pohjaDao.findAll();
             List<Kastike> kastikkeet = kastikeDao.findAll();
             List<Tayte> taytteet = tayteDao.findAll();

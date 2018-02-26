@@ -4,6 +4,22 @@
     <head>
         <title>Pizza</title>
         <meta charset="utf-8" />
+        <style>
+            .btn-link{
+                border:none;
+                outline:none;
+                background:none;
+                cursor:pointer;
+                color:#0000EE;
+                padding:0;
+                text-decoration:underline;
+                font-family:inherit;
+                font-size:inherit;
+            }
+            .btn-link:active{
+                color:#FF0000;
+            }
+        </style>
     </head>
 
     <body>
@@ -24,9 +40,10 @@
         </ul>
         <h3>Täytteet</h3>
         <ul>
-            <li th:each="tayte : ${pizza.taytteet}">
-                    <span th:text="${tayte.nimi}">Nimi
-                    </span>
+            <li th:each="pizzatayte : ${pizza.taytteet}">
+                <form th:action="${'/pizzataytteet/' + pizza.id + '/delete/' + pizzatayte.id}" method="POST">
+                    <span th:text="${pizzatayte.nimi}">Nimi</span>
+                (<input name="poisto" type="submit" value="poista" class="btn-link"/>)</form>
             </li>
         </ul>
         <form action="/pizzataytteet/" th:attrappend="action=${pizza.id}" method="POST">

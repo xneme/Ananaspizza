@@ -34,6 +34,7 @@ CREATE TABLE Koko (
 );
 
 CREATE TABLE PizzaTayte (
+    id SERIAL PRIMARY KEY,
     pizza_id INTEGER,
     tayte_id INTEGER,
     FOREIGN KEY (pizza_id) REFERENCES Pizza(id),
