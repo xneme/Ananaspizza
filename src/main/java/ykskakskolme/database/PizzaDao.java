@@ -148,5 +148,16 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         stmt.close();
         conn.close();
     }
+    
+    public void poistaTayte(Integer key) throws SQLException {
+        Connection conn = database.getConnection();
+        
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE id = ? ");
+        stmt.setInt(1, key);
+        stmt.executeUpdate();
+
+        stmt.close();
+        conn.close();
+    }
 
 }
