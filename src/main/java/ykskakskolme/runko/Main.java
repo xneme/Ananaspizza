@@ -146,7 +146,9 @@ public class Main {
             double hinta = Double.parseDouble(req.queryParams("hinta"));
 
             int id = pizzaDao.saveRaw(nimi, pohjaId, kastikeId, kokoId, hinta);
-
+            
+            pizzaDao.lisaaTayte(id, 1);
+            
             res.redirect("/pizzataytteet/" + id);
             return "";
         });
