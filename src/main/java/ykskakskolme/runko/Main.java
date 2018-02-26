@@ -100,15 +100,18 @@ public class Main {
             // poistetaan listalta eipohjaa ja eikastiketta
             pohjat.remove(0);
             kastikkeet.remove(0);
+            taytteet.remove(0);
 
             Pohja eipohjaa = pohjaDao.findOne(1);
             Kastike eikastiketta = kastikeDao.findOne(1);
+            Tayte ananas = tayteDao.findOne(1);
 
             map.put("pohjat", pohjat);
             map.put("kastikkeet", kastikkeet);
             map.put("taytteet", taytteet);
             map.put("eipohjaa", eipohjaa);
             map.put("eikastiketta", eikastiketta);
+            map.put("ananas", ananas);
 
             return new ModelAndView(map, "taytteet");
         }, new ThymeleafTemplateEngine());
