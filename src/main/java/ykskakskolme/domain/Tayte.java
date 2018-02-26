@@ -24,4 +24,12 @@ public class Tayte {
         return vegaaninen;
     }
     
+    public String getFormatNimi() {
+        String ret = nimi;
+        if (vegaaninen) {
+            ret += " (v)";
+        }
+        return ret;
+    }
+    
 }

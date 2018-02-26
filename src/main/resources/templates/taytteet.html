@@ -59,7 +59,7 @@
             <li><span th:text="${ananas.nimi}">Nimi</span></li>
             <li th:each="tayte : ${taytteet}">
                 <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}">
-                <span th:text="${tayte.nimi}">Nimi</span>
+                <span th:text="${tayte.formatNimi}" >Nimi</span>
                 (<input type="submit" value="Poista" class="btn-link"/>)</form>
             </li>
         </ul>
