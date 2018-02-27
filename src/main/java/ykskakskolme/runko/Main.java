@@ -79,7 +79,7 @@ public class Main {
             int pizzaId = Integer.parseInt(req.params(":pizza"));
             int tayteId = Integer.parseInt(req.params(":tayte"));
 
-            pizzaDao.poistaTayte(tayteId);
+            pizzaDao.poistaTayte(pizzaId, tayteId);
 
             res.redirect("/pizzataytteet/" + pizzaId);
             return "";

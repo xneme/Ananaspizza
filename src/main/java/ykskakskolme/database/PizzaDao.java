@@ -149,11 +149,12 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         conn.close();
     }
     
-    public void poistaTayte(Integer key) throws SQLException {
+    public void poistaTayte(Integer pizzaId, Integer PizzaTayteId) throws SQLException {
         Connection conn = database.getConnection();
         
-        PreparedStatement stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE id = ? ");
-        stmt.setInt(1, key);
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM PizzaTayte WHERE id = ? AND id NOT IN (SELECT id FROM PizzaTayte WHERE pizza_id = ? ORDER BY id LIMIT 1)");
+        stmt.setInt(1, PizzaTayteId);
+        stmt.setInt(2, pizzaId);
         stmt.executeUpdate();
 
         stmt.close();
