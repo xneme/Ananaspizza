@@ -46,7 +46,7 @@
         <h3>Täytteet</h3>
         <ul>
             <li th:each="tayte : ${pizza.taytteet}">
-                <span th:text="${tayte.nimi + '' + tayte.ohje}">Nimi
+                <span th:text="${tayte.nimi + tayte.ohje}">Nimi
                 </span>
             </li>
         </ul>

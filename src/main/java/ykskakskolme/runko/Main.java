@@ -83,11 +83,7 @@ public class Main {
             Integer pizzaId = Integer.parseInt(req.params(":id"));
             //Haetaan pizza
             Pizza p = pizzaDao.findOne(pizzaId);
-            for (Tayte t: p.getTaytteet()) {
-                if (t != null && !t.getOhje().trim().isEmpty()) {
-                    t.setOhje(" - " + t.getOhje());
-                }
-            }
+            
             String vegaani = "Vegaaniton";
             if (p.vegaaninen()) {
                 vegaani = "Vegaaninen";
@@ -104,11 +100,7 @@ public class Main {
             Integer pizzaId = Integer.parseInt(req.params(":id"));
             //Haetaan pizza
             Pizza p = pizzaDao.findOne(pizzaId);
-            for (Tayte t: p.getTaytteet()) {
-                if (t != null && !t.getOhje().trim().isEmpty()) {
-                    t.setOhje(" - " + t.getOhje());
-                }
-            }
+            
             List<Tayte> taytteet = tayteDao.findAll();
             //Näytetään pizza
             map.put("pizza", p);
@@ -120,7 +112,11 @@ public class Main {
             int pizzaId = Integer.parseInt(req.params(":id"));
             int tayteId = Integer.parseInt(req.queryParams("taytebox"));
             String ohje = req.queryParamOrDefault("ohje", "");
-
+            
+            if (ohje.length() > 0) {
+                ohje = " - " + ohje;
+            }
+            
             pizzaDao.lisaaTayte(pizzaId, tayteId, ohje);
 
             res.redirect("/pizzataytteet/" + pizzaId);
