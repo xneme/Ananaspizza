@@ -34,8 +34,8 @@
         </ul>
 
         <form action="/lisaapohja" method="POST">
-            <input type="text" name="pohja"/>
-            <input type="submit" value="Lisää pohja"/>
+            <input type="text" name="pohja" th:required="required"/>
+            <input type="submit" value="Lisää pohja "/>
         </form>
 
         <h3>Kastikkeet</h3>
@@ -48,7 +48,7 @@
         </ul>
 
         <form action="/lisaakastike" method="POST">
-            <input type="text" name="kastike"/>
+            <input type="text" name="kastike" th:required="required"/>
             <input type="submit" value="Lisää kastike"/>
         </form>
 
@@ -62,7 +62,7 @@
         </ul>
 
         <form action="/lisaatayte" method="POST">
-            <input type="text" name="tayte"/>
+            <input type="text" name="tayte" th:required="required"/>
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää täyte"/>
         </form>
@@ -72,5 +72,6 @@
         </a>
 
     </body>
+
 
 </html>

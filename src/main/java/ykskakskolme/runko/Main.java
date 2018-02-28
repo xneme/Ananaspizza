@@ -131,7 +131,11 @@ public class Main {
 
         Spark.post("/lisaapizza", (req, res) -> {
             String nimi = req.queryParams("pizza");
-
+            
+            if (emptyInput(req.queryParams("pizza"))) {
+                res.redirect("/lisays");
+                return "";
+            }
             System.out.println("Saatiin: "
                     + req.queryParams("pizza") + " "
                     + req.queryParams("kokobox") + " "
