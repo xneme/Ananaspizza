@@ -42,7 +42,7 @@ public class Pizza {
     }
     
     public boolean vegaaninen() {
-        return taytteet.stream().allMatch(t -> t.getVegaaninen());
+        return taytteet.stream().allMatch(t -> t.getVegaaninen()) && pohja.getVegaaninen() && kastike.getVegaaninen();
     }
     public Double getHinta() {
         return hinta;

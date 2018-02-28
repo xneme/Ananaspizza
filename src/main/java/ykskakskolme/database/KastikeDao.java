@@ -27,7 +27,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
             return null;
         }
 
-        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
+        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
         rs.close();
         stmt.close();
         conn.close();
@@ -43,7 +43,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            kastikkeet.add(new Kastike(rs.getInt("id"), rs.getString("nimi")));
+            kastikkeet.add(new Kastike(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen")));
         }
 
         rs.close();
@@ -67,7 +67,7 @@ public class KastikeDao implements Dao<Kastike, Integer> {
             return null;
         }
 
-        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"));
+        Kastike k = new Kastike(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
         rs.close();
         stmt.close();
         conn.close();
@@ -78,9 +78,11 @@ public class KastikeDao implements Dao<Kastike, Integer> {
     public Kastike saveOrUpdate(Kastike object) throws SQLException {
         // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kastike (nimi) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kastike (nimi, vegaaninen) VALUES (?, ?)");
         stmt.setString(1, object.getNimi());
+        stmt.setBoolean(2, object.getVegaaninen());
         stmt.executeUpdate();
+        
         stmt.close();
         conn.close();
 

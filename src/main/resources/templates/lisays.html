@@ -17,16 +17,16 @@
             <br />
             Valitse pohja:
             <select name="pohjabox" th:field="*{pohja}">
-                <option th:each="pohja : ${pohjat}" th:value="${pohja.id}" th:text="${pohja.nimi}">Pohja</option>
+                <option th:each="pohja : ${pohjat}" th:value="${pohja.id}" th:text="${pohja.nimiveg}">Pohja</option>
             </select>
             <br />
             Valitse kastike:
             <select name="kastikebox" th:field="*{kastike}">
-                <option th:each="kastike : ${kastikkeet}" th:value="${kastike.id}" th:text="${kastike.nimi}">Kastike</option>
+                <option th:each="kastike : ${kastikkeet}" th:value="${kastike.id}" th:text="${kastike.nimiveg}">Kastike</option>
             </select>
             <br />
             Pizzan hinta:
-            <input type="number" step="0.01" name="hinta"/> euroa
+            <input type="number" step="0.01" name="hinta" th:required="required"/> euroa
             <br />
             Pizzan nimi:
             <input type="text" name="pizza" th:required="required"/> 

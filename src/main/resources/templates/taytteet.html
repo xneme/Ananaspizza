@@ -28,13 +28,14 @@
         <ul>
             <li th:each="pohja : ${pohjat}">
                 <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}">
-                <span th:text="${pohja.nimi}">Nimi</span>
+                <span th:text="${pohja.nimiveg}">Nimi</span>
                 <input th:unless="${pohja.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>
 
         <form action="/lisaapohja" method="POST">
             <input type="text" name="pohja" th:required="required"/>
+            <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää pohja "/>
         </form>
 
@@ -42,13 +43,14 @@
         <ul>
             <li th:each="kastike : ${kastikkeet}">
                 <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}">
-                <span th:text="${kastike.nimi}">Nimi</span>
+                <span th:text="${kastike.nimiveg}">Nimi</span>
                 <input th:unless="${kastike.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>
 
         <form action="/lisaakastike" method="POST">
             <input type="text" name="kastike" th:required="required"/>
+            <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää kastike"/>
         </form>
 
@@ -56,7 +58,7 @@
         <ul>
             <li th:each="tayte : ${taytteet}">
                 <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}">
-                <span th:text="${tayte.formatNimi}" >Nimi</span>
+                <span th:text="${tayte.nimiveg}" >Nimi</span>
                 <input th:unless="${tayte.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>

@@ -229,7 +229,9 @@ public class Main {
                 res.redirect("/taytteet");
                 return "";
             }
-            Pohja p = new Pohja(null, req.queryParams("pohja"));
+            
+            Boolean vegaaninen = req.queryParamOrDefault("vegaaninen", "false").equals("true");
+            Pohja p = new Pohja(null, req.queryParams("pohja"), vegaaninen);
             pohjaDao.saveOrUpdate(p);
 
             res.redirect("/taytteet");
@@ -244,7 +246,8 @@ public class Main {
                 res.redirect("/taytteet");
                 return "";
             }
-            Kastike k = new Kastike(null, req.queryParams("kastike"));
+            Boolean vegaaninen = req.queryParamOrDefault("vegaaninen", "false").equals("true");
+            Kastike k = new Kastike(null, req.queryParams("kastike"), vegaaninen);
             kastikeDao.saveOrUpdate(k);
 
             res.redirect("/taytteet");

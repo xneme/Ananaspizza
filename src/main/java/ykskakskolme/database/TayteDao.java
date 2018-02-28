@@ -55,23 +55,6 @@ public class TayteDao implements Dao<Tayte, Integer> {
         return taytteet;
     }
     
-    public List<Tayte> findAllInPizza() throws SQLException {
-        Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM PizzaTayte");
-        List<Tayte> taytteet = new ArrayList<>();
-
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            taytteet.add(this.findOne(rs.getInt("tayte_id")));
-        }
-
-        rs.close();
-        stmt.close();
-        conn.close();
-
-        return taytteet;
-    }
-    
     public List<Tilastoalkio> tilasto() throws SQLException {
         Connection conn = database.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT nimi, COUNT(*) AS maara FROM (SELECT DISTINCT Tayte.nimi AS nimi, Pizza.id FROM Tayte, Pizza, PizzaTayte WHERE PizzaTayte.pizza_id = Pizza.id AND PizzaTayte.tayte_id = Tayte.id) AS alikyselyllaonpakkoollanimi GROUP BY nimi ORDER BY maara DESC LIMIT 5");

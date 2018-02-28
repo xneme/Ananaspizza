@@ -28,7 +28,7 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             return null;
         }
 
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
 
         rs.close();
         stmt.close();
@@ -45,7 +45,7 @@ public class PohjaDao implements Dao<Pohja, Integer> {
 
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            pohjat.add(new Pohja(rs.getInt("id"), rs.getString("nimi")));
+            pohjat.add(new Pohja(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen")));
         }
 
         rs.close();
@@ -70,7 +70,7 @@ public class PohjaDao implements Dao<Pohja, Integer> {
             return null;
         }
 
-        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"));
+        Pohja p = new Pohja(rs.getInt("id"), rs.getString("nimi"), rs.getBoolean("vegaaninen"));
         
         rs.close();
         stmt.close();
@@ -83,8 +83,9 @@ public class PohjaDao implements Dao<Pohja, Integer> {
     public Pohja saveOrUpdate(Pohja object) throws SQLException {
         // tällä hetkellä vain save, ja palauttaa inputin ilman id:tä 
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pohja (nimi) VALUES (?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Pohja (nimi, vegaaninen) VALUES (?, ?)");
         stmt.setString(1, object.getNimi());
+        stmt.setBoolean(2, object.getVegaaninen());
         stmt.executeUpdate();
         
         stmt.close();

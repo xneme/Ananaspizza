@@ -33,7 +33,7 @@ public class Tayte {
         return vegaaninen;
     }
     
-    public String getFormatNimi() {
+    public String getNimiVeg() {
         String ret = nimi;
         if (vegaaninen) {
             ret += " (v)";
