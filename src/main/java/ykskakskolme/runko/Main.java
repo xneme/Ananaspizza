@@ -1,5 +1,7 @@
 package ykskakskolme.runko;
 
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import ykskakskolme.domain.*;
 import ykskakskolme.database.*;
 import java.util.*;
@@ -38,13 +40,14 @@ public class Main {
         
         Spark.post("/search", (req, res) -> {
             String param = req.queryParams("hakuteksti");
-            
+            param = URLEncoder.encode(param, "UTF-8");
             res.redirect("/search/" + param);
             return "";
         });
         
         Spark.get("/search/:param", (req, res) -> {
             String param = req.params(":param");
+            param = URLDecoder.decode(param, "UTF-8");
             List<Pizza> hakutulos = pizzaDao.findLike(param);
   
             HashMap map = new HashMap<>();
