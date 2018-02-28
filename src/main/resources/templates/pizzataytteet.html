@@ -42,7 +42,7 @@
         <ul>
             <li th:each="pizzatayte : ${pizza.taytteet}">
                 <form th:action="${'/pizzataytteet/' + pizza.id + '/delete/' + pizzatayte.id}" method="POST">
-                    <span th:text="${pizzatayte.formatnimi + ' ' + pizzatayte.ohje}">Nimi</span>
+                    <span th:text="${pizzatayte.formatnimi + ' - ' + pizzatayte.ohje}">Nimi</span>
                     <input th:unless="${pizzatayte.id < 0}" name="poisto" type="submit" value="(poista)" class="btn-link"/></form>
             </li>
         </ul>
