@@ -106,8 +106,9 @@ public class Main {
         Spark.post("/pizzataytteet/:id", (req, res) -> {
             int pizzaId = Integer.parseInt(req.params(":id"));
             int tayteId = Integer.parseInt(req.queryParams("taytebox"));
+            String ohje = req.queryParamOrDefault("ohje", "");
 
-            pizzaDao.lisaaTayte(pizzaId, tayteId);
+            pizzaDao.lisaaTayte(pizzaId, tayteId, ohje);
 
             res.redirect("/pizzataytteet/" + pizzaId);
             return "";
@@ -188,7 +189,7 @@ public class Main {
 
             int id = pizzaDao.saveRaw(nimi, pohjaId, kastikeId, kokoId, hinta);
             
-            pizzaDao.lisaaTayte(id, 1);
+            pizzaDao.lisaaTayte(id, 1, "");
             
             res.redirect("/pizzataytteet/" + id);
             return "";

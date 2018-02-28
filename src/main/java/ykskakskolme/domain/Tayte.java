@@ -5,13 +5,22 @@ public class Tayte {
     private Integer id;
     private String nimi;
     private Boolean vegaaninen;
+    private String ohje;
 
     public Tayte(Integer id, String nimi, Boolean vegaaninen) {
         this.id = id;
         this.nimi = nimi;
         this.vegaaninen = vegaaninen;
+        this.ohje = "";
     }
 
+    public Tayte(Integer id, String nimi, Boolean vegaaninen, String ohje) {
+        this.id = id;
+        this.nimi = nimi;
+        this.vegaaninen = vegaaninen;
+        this.ohje = ohje;
+    }
+    
     public Integer getId() {
         return id;
     }
@@ -35,4 +44,10 @@ public class Tayte {
     public void setNoDelete() {
         this.id = -1;
     }
+
+    public String getOhje() {
+        return ohje;
+    }
+    
+    
 }

@@ -148,11 +148,12 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         return id;
     }
 
-    public void lisaaTayte(Integer pizzaId, Integer tayteId) throws SQLException {
+    public void lisaaTayte(Integer pizzaId, Integer tayteId, String ohje) throws SQLException {
         Connection conn = database.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaTayte (pizza_id, tayte_id) VALUES (?, ?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO PizzaTayte (pizza_id, tayte_id, ohje) VALUES (?, ?, ?)");
         stmt.setInt(1, pizzaId);
         stmt.setInt(2, tayteId);
+        stmt.setString(3, ohje);
         stmt.executeUpdate();
 
         stmt.close();
