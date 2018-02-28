@@ -49,5 +49,9 @@ public class Tayte {
         return ohje;
     }
     
+    public void setOhje(String ohje) {
+        this.ohje = ohje;
+    }
+    
     
 }
