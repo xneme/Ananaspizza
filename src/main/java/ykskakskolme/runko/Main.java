@@ -156,8 +156,12 @@ public class Main {
             System.out.println("Saatiin: "
                     + req.queryParams("tayte") + " "
                     + req.queryParams("vegaaninen"));
-
+            
             Boolean vegaaninen = req.queryParamOrDefault("vegaaninen", "false").equals("true");
+            if (emptyInput(req.queryParams("tayte"))) {
+                res.redirect("/taytteet");
+                return "";
+            }
             Tayte t = new Tayte(null, req.queryParams("tayte"), vegaaninen);
             tayteDao.saveOrUpdate(t);
 
@@ -168,7 +172,11 @@ public class Main {
         Spark.post("/lisaapohja", (req, res) -> {
             System.out.println("Saatiin: "
                     + req.queryParams("pohja"));
-
+            
+            if (emptyInput(req.queryParams("pohja"))) {
+                res.redirect("/taytteet");
+                return "";
+            }
             Pohja p = new Pohja(null, req.queryParams("pohja"));
             pohjaDao.saveOrUpdate(p);
 
@@ -179,7 +187,11 @@ public class Main {
         Spark.post("/lisaakastike", (req, res) -> {
             System.out.println("Saatiin: "
                     + req.queryParams("kastike"));
-
+            
+            if (emptyInput(req.queryParams("kastike"))) {
+                res.redirect("/taytteet");
+                return "";
+            }
             Kastike k = new Kastike(null, req.queryParams("kastike"));
             kastikeDao.saveOrUpdate(k);
 
@@ -242,6 +254,10 @@ public class Main {
             return "";
         });
         
+    }
+    
+    public static boolean emptyInput(String input) {
+        return input.trim().isEmpty();
     }
     
 }
