@@ -16,15 +16,6 @@
             :D
         </p>-->
 
-        <ul>
-            <li th:each="arvo : ${pizzat}">
-                <a th:href="@{~/pizza/{id}(id=${arvo.id})}">
-                    <span th:text="${arvo.nimi}">Nimi</span>
-                </a>
-                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
-            </li>
-        </ul>
-
         <a th:href="@{~/lisays}">
             <h3>Lisää pizza</h3>
         </a>
@@ -34,6 +25,20 @@
         <a th:href="@{~/tilastot}">
             <h3>Tilastotietoa</h3>
         </a>
+        
+        <form action="/search" method="POST">
+             <input name="hakuteksti" type="text">
+             <input type="submit" value="Hae pizzoja">
+        </form>
+        
+        <ul>
+            <li th:each="arvo : ${pizzat}">
+                <a th:href="@{~/pizza/{id}(id=${arvo.id})}">
+                    <span th:text="${arvo.nimi}">Nimi</span>
+                </a>
+                <!--<form method="POST" th:action="@{~/delete/{pizzaId}(pizzaId=${arvo.id})}"><input type="submit" value="Poista"/></form>-->
+            </li>
+        </ul>
     </body>
 
 </html>

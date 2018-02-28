@@ -35,6 +35,44 @@ public class Main {
 
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
+        
+        Spark.post("/search", (req, res) -> {
+            String param = req.queryParams("hakuteksti");
+            
+            res.redirect("/search/" + param);
+            return "";
+        });
+        
+        Spark.get("/search/:param", (req, res) -> {
+            String param = req.params(":param");
+            List<Pizza> hakutulos = pizzaDao.findLike(param);
+  
+            HashMap map = new HashMap<>();
+
+            map.put("pizzat", hakutulos);
+
+            return new ModelAndView(map, "search");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/search/", (req, res) -> {
+            List<Pizza> hakutulos = pizzaDao.findAll();
+  
+            HashMap map = new HashMap<>();
+
+            map.put("pizzat", hakutulos);
+
+            return new ModelAndView(map, "search");
+        }, new ThymeleafTemplateEngine());
+        
+        Spark.get("/search", (req, res) -> {
+            List<Pizza> hakutulos = pizzaDao.findAll();
+  
+            HashMap map = new HashMap<>();
+
+            map.put("pizzat", hakutulos);
+
+            return new ModelAndView(map, "search");
+        }, new ThymeleafTemplateEngine());
 
         Spark.get("/pizza/:id", (req, res) -> {
             HashMap map = new HashMap<>();

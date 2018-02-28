@@ -79,6 +79,32 @@ public class PizzaDao implements Dao<Pizza, Integer> {
         return pizzat;
 
     }
+    
+    public List<Pizza> findLike(String param) throws SQLException {
+        Connection conn = database.getConnection();
+        
+        PreparedStatement stmt = conn.prepareStatement("SELECT * FROM Pizza WHERE nimi LIKE ?");
+        stmt.setString(1, "%" + param + "%");
+        
+        List<Pizza> pizzat = new ArrayList<>();
+
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            List<Tayte> taytteet = tayteDao.findByPizzaId(id);
+            Pohja pohja = pohjaDao.findByPizzaId(id);
+            Kastike kastike = kastikeDao.findByPizzaId(id);
+            Koko koko = kokoDao.findByPizzaId(id);
+
+            pizzat.add(new Pizza(id, rs.getString("nimi"), pohja, kastike, taytteet, koko, rs.getDouble("hinta")));
+        }
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return pizzat;
+
+    }
 
     @Override
     public Pizza saveOrUpdate(Pizza object) throws SQLException {
