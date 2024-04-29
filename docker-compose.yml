@@ -1,0 +1,39 @@
+version: "3.5"
+services:
+  server:
+    image: xneme/ananaspizza
+    build:
+      context: .
+    environment:
+       - JDBC_DATABASE_URL=jdbc:postgresql://postgres:postgres@db:5432/postgres
+    ports:
+      - "8000:4567"
+    depends_on:
+      - db
+    networks:
+      - default
+      - database
+    container_name: ananaspizza
+ 
+  db:
+    image: postgres:14.3
+    environment:
+      - PGDATA=/data
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pg_data:/data
+        #    ports:
+        #      - 5432:5432
+    expose:
+      - 5432
+    networks:
+      - database
+    container_name: ananaspizza-db
+
+volumes:
+  pg_data:
+
+networks:
+  database:
+  default:
