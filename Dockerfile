@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk8 
+FROM adoptopenjdk/openjdk11 
 
 # Install maven
 RUN apt-get update

@@ -24,6 +24,7 @@ public class Database {
 
     public Connection getConnection() throws SQLException {
         System.out.println("Connecting to " + databaseAddress);
-        return DriverManager.getConnection(databaseAddress);
+//return DriverManager.getConnection(databaseAddress);
+        return DriverManager.getConnection("jdbc:postgresql://db:5432/postgres", "postgres", "postgres");
     }
 }

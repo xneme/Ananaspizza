@@ -44,3 +44,5 @@ INSERT INTO Pizza (nimi, pohja_id, kastike_id, koko_id, hinta)
 INSERT INTO PizzaTayte (pizza_id, tayte_id) VALUES (4, 1);
 INSERT INTO PizzaTayte (pizza_id, tayte_id) VALUES (4, 5);
 
+COMMIT;
+
