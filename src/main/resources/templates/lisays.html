@@ -7,9 +7,9 @@
     </head>
 
     <body>
-        <h1>Lisää pizza</h1>
+        <h1>Lisää uusi pizza</h1>
         
-        <form action="/lisaapizza" method="POST">
+        <form action="/ananaspizza/lisaapizza" method="POST">
             Valitse koko:
             <select name="kokobox" th:field="*{koko}">
                 <option th:each="koko : ${koot}" th:value="${koko.id}" th:text="${koko.nimi}">Koko</option>
@@ -34,7 +34,7 @@
             <input type="submit" value="Lisää pizza"/>
         </form>
         <br />
-        <a th:href="@{~/}">
+          <a th:href="@{~/ananaspizza/}">
             Takaisin etusivulle
         </a>
     </body>

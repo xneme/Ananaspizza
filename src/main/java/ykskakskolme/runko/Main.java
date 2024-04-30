@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        Database database = new Database("jdbc:postgresql://postgres:postgres@db:5432/postgres");
+        Database database = new Database("jdbc:sqlite:pizzat.db");
 
         PohjaDao pohjaDao = new PohjaDao(database);
         KastikeDao kastikeDao = new KastikeDao(database);

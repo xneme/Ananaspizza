@@ -6,19 +6,19 @@
     </head>
 
     <body>
-        <a th:href="@{~/}">
+        <a th:href="@{~/ananaspizza/}">
             Takaisin etusivulle
         </a>
         <br />
         <br />
-        <form action="/search" method="POST">
+        <form action="/ananaspizza/search" method="POST">
              <input name="hakuteksti" type="text"/>
              <input type="submit" value="Hae pizzoja" />
         </form>
         
         <ul>
             <li th:each="arvo : ${pizzat}">
-                <a th:href="@{~/pizza/{id}(id=${arvo.id})}">
+                <a th:href="@{~/ananaspizza/pizza/{id}(id=${arvo.id})}">
                     <span th:text="${arvo.nimi}">Nimi</span>
                 </a>
             </li>

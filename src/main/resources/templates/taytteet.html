@@ -27,13 +27,13 @@
         <h3>Pohjat</h3>
         <ul>
             <li th:each="pohja : ${pohjat}">
-                <form method="POST" th:action="@{~/poistapohja/{pohjaId}(pohjaId=${pohja.id})}">
+                <form method="POST" th:action="@{~/ananaspizza/poistapohja/{pohjaId}(pohjaId=${pohja.id})}">
                 <span th:text="${pohja.nimiveg}">Nimi</span>
                 <input th:unless="${pohja.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>
 
-        <form action="/lisaapohja" method="POST">
+        <form action="/ananaspizza/lisaapohja" method="POST">
             <input type="text" name="pohja" th:required="required"/>
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää pohja "/>
@@ -42,13 +42,13 @@
         <h3>Kastikkeet</h3>
         <ul>
             <li th:each="kastike : ${kastikkeet}">
-                <form method="POST" th:action="@{~/poistakastike/{kastikeId}(kastikeId=${kastike.id})}">
+                <form method="POST" th:action="@{~/ananaspizza/poistakastike/{kastikeId}(kastikeId=${kastike.id})}">
                 <span th:text="${kastike.nimiveg}">Nimi</span>
                 <input th:unless="${kastike.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>
 
-        <form action="/lisaakastike" method="POST">
+        <form action="/ananaspizza/lisaakastike" method="POST">
             <input type="text" name="kastike" th:required="required"/>
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää kastike"/>
@@ -57,19 +57,19 @@
         <h3>Täytteet</h3>
         <ul>
             <li th:each="tayte : ${taytteet}">
-                <form method="POST" th:action="@{~/poistatayte/{tayteId}(tayteId=${tayte.id})}">
+                <form method="POST" th:action="@{~/ananaspizza/poistatayte/{tayteId}(tayteId=${tayte.id})}">
                 <span th:text="${tayte.nimiveg}" >Nimi</span>
                 <input th:unless="${tayte.id == 1}" type="submit" value="(poista)" class="btn-link" /></form>
             </li>
         </ul>
 
-        <form action="/lisaatayte" method="POST">
+        <form action="/ananaspizza/lisaatayte" method="POST">
             <input type="text" name="tayte" th:required="required"/>
             <input type="checkbox" name="vegaaninen" value="true">vegaaninen
             <input type="submit" value="Lisää täyte"/>
         </form>
         <br />
-        <a th:href="@{~/}">
+        <a th:href="@{~/ananaspizza/}">
             Takaisin etusivulle
         </a>
 

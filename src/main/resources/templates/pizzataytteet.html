@@ -41,12 +41,12 @@
         <h3>Täytteet</h3>
         <ul>
             <li th:each="pizzatayte : ${pizza.taytteet}">
-                <form th:action="${'/pizzataytteet/' + pizza.id + '/delete/' + pizzatayte.id}" method="POST">
+                <form th:action="${'/ananaspizza/pizzataytteet/' + pizza.id + '/delete/' + pizzatayte.id}" method="POST">
                     <span th:text="${pizzatayte.nimiveg + pizzatayte.ohje}">Nimi</span>
                     <input th:unless="${pizzatayte.id < 0}" name="poisto" type="submit" value="(poista)" class="btn-link"/></form>
             </li>
         </ul>
-        <form action="/pizzataytteet/" th:attrappend="action=${pizza.id}" method="POST">
+        <form action="/ananaspizza/pizzataytteet/" th:attrappend="action=${pizza.id}" method="POST">
             Lisää uusi täyte:
             <select name="taytebox" th:field="*{tayte}">
                 <option th:each="tayte : ${taytteet}" th:value="${tayte.id}" th:text="${tayte.nimiveg}">Tayte</option>
@@ -56,6 +56,6 @@
             <input type="submit" value="Lisää täyte"/>
         </form>
         <br />
-        <a th:href="@{~/}">Takaisin etusivulle</a>
+        <a th:href="@{~/ananaspizza/}">Takaisin etusivulle</a>
     </body>
 </html>

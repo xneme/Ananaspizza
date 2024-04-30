@@ -50,12 +50,12 @@
                 </span>
             </li>
         </ul>
-        <a th:href="@{~/pizzataytteet/{id}(id=${pizza.id})}">Muokkaa täytteitä</a>
+        <a th:href="@{~/ananaspizza/pizzataytteet/{id}(id=${pizza.id})}">Muokkaa täytteitä</a>
         <br />
-        <form method="POST" th:action="@{~/poistapizza/{Id}(Id=${pizza.id})}">
+        <form method="POST" th:action="@{~/ananaspizza/poistapizza/{Id}(Id=${pizza.id})}">
             <input type="submit" value="Poista" class="btn-link"/>
         </form>
         <br />
-        <a th:href="@{~/}">Takaisin etusivulle</a>
+        <a th:href="@{~/ananaspizza/}">Takaisin etusivulle</a>
     </body>
 </html>
